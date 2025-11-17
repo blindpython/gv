@@ -1816,9 +1816,7 @@ const restaurants = [
     hours: "11:30-20:00", closed: "週三",
     recommendations: [{jp:"うな重",cn:"鰻魚飯"},{jp:"肝焼き",cn:"烤鰻肝"}],
     notes: "鰻魚肥美，價格中高。"
-  }
-
-
+  },
   {
     id: 201, name: "札幌 海鮮酒場 魚市", location: "札幌", category: "居酒屋",
     tabelogScore: 3.53, tabelogReviews: 610, tabelogLink: "https://tabelog.com/tw/hokkaido/A0101/A010103/1201234/dtlrvwlst/",
