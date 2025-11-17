@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>北海道聖誕夜跨年旅 (12/23 - 1/1)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 引入 Inter 字體 */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        html {
+            scroll-behavior: smooth; /* 讓滾動更平滑 */
+        }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #f7f7f7;
+            overflow-x: hidden;
+        }
+        .bg-hokkaido { background-color: #1e3a8a; }
+        .table-header { background-color: #3b82f6; color: white; }
+        .timetable-link {
+            font-size: 0.8rem;
+            color: #00A650; /* JR Green */
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 4px;
+            margin-right: 8px;
+            cursor: pointer;
+        }
+        .timetable-link:hover { text-decoration: underline; }
+        
+        .scheduled-link {
+            font-size: 0.8rem;
+            color: #ea580c; /* Orange */
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 4px;
+            margin-right: 8px;
+            cursor: pointer;
+        }
+        .scheduled-link:hover { text-decoration: underline; }
+
+        /* 本日重點 樣式 */
+        .day-hint {
+            background-color: #fffbeb; /* Light yellow */
+            color: #b45309; /* Dark yellow/brown */
+            font-size: 0.875rem; /* text-sm */
+            padding: 0.75rem 1.25rem; /* p-3 py-5 */
+            text-align: left;
+            column-span: all;
+        }
+        .day-hint strong.title {
+            color: #92400e; /* Darker brown */
+            font-size: 1rem; /* text-base */
+            display: block;
+            margin-bottom: 0.25rem; /* mb-1 */
+        }
+        .day-hint ul {
+            list-style-type: disc;
+            list-style-position: inside;
+            space-y: 0.25rem; /* space-y-1 */
+        }
+        
+        /* 下雪動畫 CSS */
+        .snowflake {
+            color: #ffffff;
+            font-size: 1.2em;
+            font-family: Arial, sans-serif;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            position: fixed;
+            top: -10%;
+            z-index: 9999;
+            user-select: none;
+            pointer-events: none;
+            animation: snowfall linear infinite;
+        }
+
+        @keyframes snowfall {
+            0% { transform: translateY(0vh) translateX(0vw); opacity: 1; }
+            100% { transform: translateY(105vh) translateX(3vw); opacity: 0.2; }
+        }
+
+        .snowflake:nth-of-type(1) { left: 5%; animation-duration: 12s; animation-delay: 0s; }
+        .snowflake:nth-of-type(2) { left: 10%; animation-duration: 8s; animation-delay: 2s; font-size: 0.8em; }
+        .snowflake:nth-of-type(3) { left: 15%; animation-duration: 10s; animation-delay: 4s; }
+        .snowflake:nth-of-type(4) { left: 25%; animation-duration: 7s; animation-delay: 1s; font-size: 0.7em; }
+        .snowflake:nth-of-type(5) { left: 30%; animation-duration: 11s; animation-delay: 3s; }
+        .snowflake:nth-of-type(6) { left: 35%; animation-duration: 9s; animation-delay: 0s; font-size: 0.8em; }
+        .snowflake:nth-of-type(7) { left: 45%; animation-duration: 13s; animation-delay: 2s; }
+        .snowflake:nth-of-type(8) { left: 50%; animation-duration: 8s; animation-delay: 1s; font-size: 0.7em; }
+        .snowflake:nth-of-type(9) { left: 55%; animation-duration: 10s; animation-delay: 3s; }
+        .snowflake:nth-of-type(10) { left: 65%; animation-duration: 12s; animation-delay: 5s; font-size: 0.8em; }
+        .snowflake:nth-of-type(11) { left: 70%; animation-duration: 7s; animation-delay: 0s; }
+        .snowflake:nth-of-type(12) { left: 75%; animation-duration: 9s; animation-delay: 2s; font-size: 0.7em; }
+        .snowflake:nth-of-type(13) { left: 80%; animation-duration: 11s; animation-delay: 4s; }
+        .snowflake:nth-of-type(14) { left: 85%; animation-duration: 8s; animation-delay: 1s; font-size: 0.8em; }
+        .snowflake:nth-of-type(15) { left: 90%; animation-duration: 10s; animation-delay: 3s; }
+
+    </style>
+    <script>
+        // 即時查詢 JR 網站函數 (可接受指定時間)
+        function openRealTimeQuery(depStation, arvStation, customYear, customMonth, customDay, customHour, customMinute) {
+            
+            let year, month, day, hour, minute;
+            function pad2(n) { return (n < 10 ? "0" : "") + n; }
+
+            if (customYear && customMonth && customDay && customHour !== undefined && customMinute !== undefined) {
+                year = customYear; month = customMonth; day = customDay; hour = customHour; minute = customMinute;
+            } else {
+                const now = new Date();
+                year = now.getFullYear(); month = now.getMonth() + 1; day = now.getDate(); hour = now.getHours(); minute = now.getMinutes();
+            }
+
+            let url = 'https://jrhokkaidonorikae.com/pc/cgi/result.cgi?';
+            url += `search_target=route&search_way=time&sum_target=7&faretype=2&jr=on&privately=on`;
+            url += `&dep_node=${encodeURIComponent(depStation)}`;
+            url += `&arv_node=${encodeURIComponent(arvStation)}`;
+            url += `&via_node01=&via_node02=&via_node03=`;
+            url += `&year=${year}&month=${pad2(month)}&day=${pad2(day)}&hour=${pad2(hour)}&minute=${pad2(minute)}`;
+            url += `&search_type=departure&sort=time&max_route=10`;
+            url += `&sprexprs=on&utrexprs=on&exprs=on&slputr=on&slpexprs=on&sprnozomi=on&transfer=normal`;
+
+            window.open(url, '_blank');
+            return false;
+        }
+
+        // 【已修改】頁面載入時自動滾動到當天行程 (加入延遲)
+        window.onload = function() {
+            // 延遲 100 毫秒執行，等待頁面 layout 穩定
+            setTimeout(function() {
+                const now = new Date();
+                const month = now.getMonth() + 1; // 1-12
+                const day = now.getDate(); // 1-31
+                
+                let targetId = "";
+
+                // 判斷日期 (使用 2025/2026 年的日期)
+                // 假設現在是 2025 年
+                if (month === 12) {
+                    if (day === 23) targetId = "day-12-23";
+                    else if (day === 24) targetId = "day-12-24";
+                    else if (day === 25) targetId = "day-12-25";
+                    else if (day === 26) targetId = "day-12-26";
+                    else if (day === 27) targetId = "day-12-27";
+                    else if (day === 28) targetId = "day-12-28";
+                    else if (day === 29) targetId = "day-12-29";
+                    else if (day === 30) targetId = "day-12-30";
+                    else if (day === 31) targetId = "day-12-31";
+                } 
+                // 假設現在是 2026 年
+                else if (month === 1 && day === 1) {
+                    targetId = "day-1-1";
+                }
+
+                // 如果找到對應的 ID，就滾動到那裡
+                if (targetId) {
+                    const element = document.getElementById(targetId);
+                    if (element) {
+                        // 使用平滑滾動並置頂
+                        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }
+                // 如果不是旅程中的日期，就停在頁首 (預設行為)
+            }, 100); // 延遲 100ms
+        };
+    </script>
+</head>
+<body class="p-4 sm:p-8">
+
+    <!-- 雪花動畫的 HTML 元素 -->
+    <div aria-hidden="true">
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+    </div>
+
+    <!-- 內容 -->
+    <div class="max-w-4xl mx-auto rounded-xl shadow-2xl overflow-hidden bg-white relative z-10">
+        <!-- Header -->
+        <header class="bg-hokkaido p-6 sm:p-8 text-white">
+            <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight">❄️ 北海道聖誕夜跨年旅 ❄️</h1>
+            <p class="text-lg mt-1 opacity-80">行程期間：12/23 (二) - 1/1 (四) | JR Pass 8日券 (12/23 - 12/30)</p>
+        </header>
+
+        <!-- Itinerary Container -->
+        <main class="p-4 sm:p-6">
+            
+            <!-- Day 1 ID -->
+            <div id="day-12-23" class="bg-white p-4 mb-4 rounded-lg shadow-md border-t-4 border-t-hokkaido">
+                <h2 class="text-xl font-bold text-gray-800">
+                    Day 1 (12/23, 二) - 提早抵達！札幌購物樂
+                </h2>
+                <table class="min-w-full mt-3 text-sm">
+                    <thead>
+                        <tr class="table-header rounded-t-lg">
+                            <th class="p-2 text-left">時間</th>
+                            <th class="p-2 text-left">行程內容</th>
+                            <th class="p-2 text-left">地點 (點擊進入地圖)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b">
+                            <td class="p-2 font-semibold">12:00 - 13:00</td>
+                            <td class="p-2">班機抵達 (FD232)，辦理入境手續。</td>
+                            <td class="p-2"><a href="https://www.google.com/maps/search/?api=1&query=新千歲機場" target="_blank" class="text-blue-500 hover:text-blue-700">新千歲機場 (CTS)</a></td>
+                        </tr>
+                        <tr class="border-b bg-gray-50">
+                            <td class="p-2 font-semibold">13:00 - 14:00</td>
+                            <td class="p-2">JR 快速列車移動至札幌車站。<br>
+                                <a href="#" onclick="return openRealTimeQuery('新千歳空港', '札幌', 2025, 12, 23, 13, 0)" class="scheduled-link">🗓️ 查詢預定班次 (13:00)</a>
+                                <a href="#" onclick="return openRealTimeQuery('新千歳空港', '札幌')" class="timetable-link">🚄 查詢即時班次</a>
+                            </td>
+                            <td class="p-2"><a href="https://www.google.com/maps/search/?api=1&query=JR札幌駅" target="_blank" class="text-blue-500 hover:text-blue-700">JR 札幌車站</a></td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="p-2 font-semibold">14:00 - 18:00</td>
+                            <td class="p-2">**札幌車站周邊大購物**</td>
+                            <td class="p-2">
+                                <a href="https://www.google.com/maps/search/?api=1&query=Bic+Camera+札幌" target="_blank" class="text-blue-500 hover:text-blue-700">Bic Camera 札幌店</a> / 
+                                <a href="https://www.google.com/maps/search/?api=1&query=ABC-MART+さっぽろ東急百貨店" target="_blank" class="text-blue-500 hover:text-blue-700">ABC-MART 東急百貨店</a>
+                            </td>
+                        </tr>
+                        <tr class="bg-gray-50">
+                            <td class="p-2 font-semibold">18:00 - 20:30</td>
+                            <td class="p-2">札幌晚餐 + **貍小路亂晃**。</td>
+                            <td class="p-2"><a href="https://www.google.com/maps/search/?api=1&query=狸小路商店街" target="_blank" class="text-blue-500 hover:text-blue-700">貍小路商店街</a></td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="p-2 font-semibold">20:30 - 22:00</td>
+                            <td class="p-2">JR 特急往旭川，入住飯店。<br>
+                                <a href="#" onclick="return openRealTimeQuery('札幌', '旭川', 2025, 12, 23, 20, 30)" class="scheduled-link">🗓️ 查詢預定班次 (20:30)</a>
+                                <a href="#" onclick="return openRealTimeQuery('札幌', '旭川')" class="timetable-link">🚄 查詢即時班次</a>
+                            </td>
+                            <td class="p-2"><a href="https://www.google.com/maps/search/?api=1&query=旭川+Ys+Hotel" target="_blank" class="text-blue-500 hover:text-blue-700">旭川 Ys Hotel</a></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" class="day-hint">
+                                <strong class="title">💡 本日重點</strong>
+                                <ul>
+                                    <li>今天是 <strong>JR Pass 8日券</strong> 的啟用日！</li>
+                                    <li>札幌往旭川的末班特急 (特急ライラック) 約在 <strong>22:00</strong> 發車，請務必在此之前結束購物並上車。</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <!-- Day 2 ID -->
+            <div id="day-12-24" class="bg-white p-4 mb-4 rounded-lg shadow-md border-t-4 border-t-blue-500">
+                <h2 class="text-xl font-bold text-gray-800">
+                    Day 2 (12/24, 三) - 美瑛市區閒晃
+                </h2>
+                <table class="min-w-full mt-3 text-sm">
+                    <thead><tr class="table-header rounded-t-lg"><th class="p-2 text-left">時間</th><th class="p-2 text-left">行程內容</th><th class="p-2 text-left">地點 (點擊進入地圖)</th></tr></thead>
+                    <tbody>
+                        <tr class="border-b">
+                            <td class="p-2 font-semibold">09:00 - 10:30</td>
+                            <td class="p-2">JR 富良野線移動至美瑛站。<br>
+                                <a href="#" onclick="return openRealTimeQuery('旭川', '美瑛', 2025, 12, 24, 9, 0)" class="scheduled-link">🗓️ 查詢預定班次 (09:00)</a>
+                                <a href="#" onclick="return openRealTimeQuery('旭川', '美瑛')" class="timetable-link">🚄 查詢即時班次</a>
+                            </td>
+                            <td class="p-2"><a href="https://www.google.com/maps/search/?api=1&query=JR美瑛車站" target="_blank" class="text-blue-500 hover:text-blue-700">JR 美瑛車站</a></td>
+                        </tr>
+                        <tr class="border-b bg-gray-50">
+                            <td class="p-2 font-semibold">10:30 - 17:00</td>
+                            <td class="p-2">**美瑛市區閒晃：** 車站前商店街、當地商家午餐。</td>
+                            <td class="p-2"><a href="https://www.google.com/maps/search/?api=1&query=美瑛町市區" target="_blank" class="text-blue-500 hover:text-blue-700">美瑛町市區</a></td>
+                        </tr>
+                        <tr class="bg-gray-50">
+                            <td class="p-2 font-semibold">17:00 - 20:00</td>
+                            <td class="p-2">搭乘 JR 返回旭川，晚餐。<br>
+                                <a href="#" onclick="return openRealTimeQuery('美瑛', '旭川', 2025, 12, 24, 17, 0)" class="scheduled-link">🗓️ 查詢預定班次 (17:00)</a>
+                                <a href="#" onclick="return openRealTimeQuery('美瑛', '旭川')" class="timetable-link">🚄 查詢即時班次</a>
+                            </td>
+                            <td class="p-2"><a href="https://www.google.com/maps/search/?api=1&query=JR旭川車站" target="_blank" class="text-blue-500 hover:text-blue-700">JR 旭川車站</a></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" class="day-hint">
+                                <strong class="title">💡 本日重點 (美瑛)</strong>
+                                <ul>
+                                    <li><strong>美食推薦：</strong> 車站附近有「<a href="https://www.google.com/maps/search/?api=1&query=美瑛+洋食や純平" target="_blank" class="text-blue-600">洋食や純平</a>」(炸蝦飯) 非常有名 (週一常公休)。</li>
+                                    <li><strong>景點推薦：</strong> 市區可步行至「北西之丘展望公園」或「四季情報館」 (冬季可能縮短營業)。</li>
+                                    <li><strong>交通提醒：</strong> JR 富良野線**班次稀少**，請務必先查好回程時間。</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <!-- Day 3 ID -->
+            <div id="day-12-25" class="bg-white p-4 mb-4 rounded-lg shadow-md border-t-4 border-t-blue-500">
+                <h2 class="text-xl font-bold text-gray-800">
+                    Day 3 (12/25, 四) - 富良野市區閒晃
+                </h2>
+                <table class="min-w-full mt-3 text-sm">
+                    <thead><tr class="table-header rounded-t-lg"><th class="p-2 text-left">時間</th><th class="p-2 text-left">行程內容</th><th class="p-2 text-left">地點 (點擊進入地圖)</th></tr></thead>
+                    <tbody>
+                        <tr class="border-b">
+                            <td class="p-2 font-semibold">09:00 - 10:30</td>
+                            <td class="p-2">JR 富良野線移動至富良野站。<br>
+                                <a href="#" onclick="return openRealTimeQuery('旭川', '富良野', 2025, 12, 25, 9, 0)" class="scheduled-link">🗓️ 查詢預定班次 (09:00)</a>
+                                <a href="#" onclick="return openRealTimeQuery('旭川', '富良野')" class="timetable-link">🚄 查詢即時班次</a>
+                            </td>
+                            <td class="p-2"><a href="https://www.google.com/maps/search/?api=1&query=JR富良野車站" target="_blank" class="text-blue-500 hover:text-blue-700">JR 富良野車站</a></td>
+                        </tr>
+                        <tr class="border-b bg-gray-50">
+                            <td class="p-2 font-semibold">10:30 - 17:00</td>
+                            <td class="p-2">**富良野市區閒晃**</td>
+                            <td class="p-2"><a href="https://www.google.com/maps/search/?api=1&query=JR富良野車站" target="_blank" class="text-blue-500 hover:text-blue-700">富良野市區 (車站周邊)</a></td>
+                        </tr>
+                        <tr class="bg-gray-50">
+                            <td class="p-2 font-semibold">17:00 - 20:00</td>
+                            <td class="p-2">JR 返回旭川，晚餐 (推薦旭川拉麵)。<br>
+                                <a href="#" onclick="return openRealTimeQuery('富良野', '旭川', 2025, 12, 25, 17, 0)" class="scheduled-link">🗓️ 查詢預定班次 (17:00)</a>
+                                <a href="#" onclick="return openRealTimeQuery('富良野', '旭川')" class="timetable-link">🚄 查詢即時班次</a>
+                            </td>
+                            <td class="p-2"><a href="https://www.google.com/maps/search/?api=1&query=JR旭川車站" target="_blank" class="text-blue-500 hover:text-blue-700">JR 旭川車站</a></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" class="day-hint">
+                                <strong class="title">💡 本日重點 (富良野)</strong>
+                                <ul>
+                                    <li><strong>美食推薦：</strong> 車站附近的「<a href="https://www.google.com/maps/search/?api=1&query=富良野+唯我獨尊" target="_blank" class="text-blue-600">唯我獨尊</a>」(咖哩蛋包飯) 是必吃名店。</li>
+                                    <li><strong>景點推薦：</strong> 市區的「<a href="https://www.google.com/maps/search/?api=1&query=富良野マルシェ" target="_blank" class="text-blue-600">富良野 Marche</a>」(物產中心) 有超多伴手禮和在地小吃。</li>
+                                    <li><strong>交通提醒：</strong> 往返「部分班次」需在「美瑛站」轉車，請留意查詢結果。</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            
+            <!-- Day 4 ID -->
+            <div id="day-12-26" class="bg-white p-4 mb-4 rounded-lg shadow-md border-t-4 border-t-blue-500">
+                <h2 class="text-xl font-bold text-gray-800">Day 4 (12/26, 五) - 旭川市區閒晃</h2>
+                <table class="min-w-full mt-3 text-sm">
+                    <thead><tr class="table-header rounded-t-lg"><th class="p-2 text-left">時間</th><th class="p-2 text-left">行程內容</th><th class="p-2 text-left">地點 (點擊進入地圖)</th></tr></thead>
+                    <tbody>
+                        <tr class="border-b">
+                            <td class="p-2 font-semibold">全天</td>
+                            <td class="p-2">**旭川逛街：** 東急百貨 (AEON)、平和通買物公園、拉麵村。</td>
+                            <td class="p-2"><a href="https://www.google.com/maps/search/?api=1&query=平和通買物公園" target="_blank" class="text-blue-500 hover:text-blue-700">平和通買物公園</a></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" class="day-hint">
+                                <strong class="title">💡 本日重點 (旭川)</strong>
+                                <ul>
+                                    <li><strong>美食推薦：</strong> 必吃「旭川醬油拉麵」(推薦：<a href="https://www.google.com/maps/search/?api=1&query=旭川拉麵+山頭火" target="_blank" class="text-blue-600">山頭火</a>、<a href="https://www.google.com/maps/search/?api=1&query=旭川拉麵+青葉" target="_blank" class="text-blue-600">青葉</a>)，或是「<a href="https://www.google.com/maps/search/?api=1&query=成吉思汗大黑屋" target="_blank" class="text-blue-600">成吉思汗大黑屋</a>」烤肉。</li>
+                                    <li><strong>景點/公園：</strong> 車站前的「平和通買物公園」很好逛；時間多可散步至「<a href="https://www.google.com/maps/search/?api=1&query=常磐公園+旭川" target="_blank" class="text-blue-600">常磐公園</a>」。</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <!-- Day 5 ID -->
+            <div id="day-12-27" class="bg-white p-4 mb-4 rounded-lg shadow-md border-t-4 border-t-hokkaido">
+                <h2 class="text-xl font-bold text-gray-800">
+                    Day 5 (12/27, 六) - 轉移至札幌與市區閒晃
+                </h2>
+                <table class="min-w-full mt-3 text-sm">
+                    <thead><tr class="table-header rounded-t-lg"><th class="p-2 text-left">時間</th><th class="p-2 text-left">行程內容</th><th class="p-2 text-left">地點 (點擊進入地圖)</th></tr></thead>
+                    <tbody>
+                        <tr class="border-b">
+                            <td class="p-2 font-semibold">11:00 - 14:00</td>
+                            <td class="p-2">退房 > JR 特急移動至札幌 > 札幌車站午餐。<br>
+                                <a href="#" onclick="return openRealTimeQuery('旭川', '札幌', 2025, 12, 27, 11, 0)" class="scheduled-link">🗓️ 查詢預定班次 (11:00)</a>
+                                <a href="#" onclick="return openRealTimeQuery('旭川', '札幌')" class="timetable-link">🚄 查詢即時班次</a>
+                            </td>
+                            <td class="p-2"><a href="https://www.google.com/maps/search/?api=1&query=JR札幌駅" target="_blank" class="text-blue-500 hover:text-blue-700">JR 札幌車站</a></td>
+                        </tr>
+                        <tr class="border-b bg-gray-50">
+                            <td class="p-2 font-semibold">14:00 - 15:00</td>
+                            <td class="p-2">R&B Hotel 辦理入住與放行李。</td>
+                            <td class="p-2"><a href="https://www.google.com/maps/search/?api=1&query=ワシントンR＆Bホテル札幌北3西2" target="_blank" class="text-blue-500 hover:text-blue-700">R&B Hotel 札幌北3西2</a></td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="p-2 font-semibold">15:00 - 18:00</td>
+                            <td class="p-2">大通公園、札幌電視塔、地下街購物閒晃。</td>
+                            <td class="p-2"><a href="https://www.google.com/maps/search/?api=1&query=札幌電視塔" target="_blank" class="text-blue-500 hover:text-blue-700">札幌電視塔</a></td>
+                        </tr>
+                        <tr class="bg-gray-50">
+                            <td class="p-2 font-semibold">18:00 - 22:00</td>
+                            <td class="p-2">市區晚餐/消夜 > **JR塔展望室T38看夜景**。</td>
+                            <td class="p-2"><a href="https://www.google.com/maps/search/?api=1&query=JR塔展望室T38" target="_blank" class="text-blue-500 hover:text-blue-700">JR塔展望室T38</a></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" class="day-hint">
+                                <strong class="title">💡 本日重點 (札幌移動)</strong>
+                                <ul>
+                                    <li>移動日！請在 <strong>11:00</strong> 準時於旭川 Ys Hotel 退房。</li>
+                                    <li>札幌 R&B Hotel 通常在 <strong>15:00</strong> 後才能辦理入住 (可先寄放行李)。</li>
+                                    <li><strong>JR 塔 T38</strong> 是看札幌夜景最方便的地點 (就在車站樓上)，建議傍晚上去。</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <!-- Day 6 ID -->
+            <div id="day-12-28" class="bg-white p-4 mb-4 rounded-lg shadow-md border-t-4 border-t-blue-500">
+                <h2 class="text-xl font-bold text-gray-800">Day 6 (12/28, 日) - 富良野美瑛一日夜遊 (11:50 集合)</h2>
+                <table class="min-w-full mt-3 text-sm">
+                    <thead><tr class="table-header rounded-t-lg"><th class="p-2 text-left">時間</th><th class="p-2 text-left">行程內容</th><th class="p-2 text-left">地點 (點擊進入地圖)</th></tr></thead>
+                    <tbody>
+                        <tr class="border-b">
+                            <td class="p-2 font-semibold">11:50 - 22:00</td>
+                            <td class="p-2">**富良野美瑛一日夜遊 (觀光團行程)**：11:50 集合出發，預計 22:00 返回札幌。</td>
+                            <td class="p-2"><a href="https://www.google.com/maps/search/?api=1&query=富良野美瑛地區" target="_blank" class="text-blue-500 hover:text-blue-700">富良野美瑛地區</a></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" class="day-hint">
+                                <strong class="title">💡 本日重點</strong>
+                                <ul>
+                                    <li>觀光團日，請務必在 <strong>11:50</strong> 前抵達集合地點。</li>
+                                    <li>這是長途巴士行程，預計 <strong>22:00</strong> 才會返回札幌，晚餐時間可能較晚。</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            
+            <!-- Day 7 ID -->
+            <div id="day-12-29" class="bg-white p-4 mb-4 rounded-lg shadow-md border-t-4 border-t-blue-500">
+                <h2 class="text-xl font-bold text-gray-800">
+                    Day 7 (12/29, 一) - 錢函與小樽運河點燈
+                </h2>
+                <table class="min-w-full mt-3 text-sm">
+                    <thead><tr class="table-header rounded-t-lg"><th class="p-2 text-left">時間</th><th class="p-2 text-left">行程內容</th><th class="p-2 text-left">地點 (點擊進入地圖)</th></tr></thead>
+                    <tbody>
+                        <tr class="border-b">
+                            <td class="p-2 font-semibold">09:00 - 11:30</td>
+                            <td class="p-2">JR 往小樽方向，中途在 **錢函** 下車亂晃。<br>
+                                <a href="#" onclick="return openRealTimeQuery('札幌', '銭函', 2025, 12, 29, 9, 0)" class="scheduled-link">🗓️ 查詢預定班次 (09:00)</a>
+                                <a href="#" onclick="return openRealTimeQuery('札幌', '銭函')" class="timetable-link">🚄 查詢即時班次</a>
+                            </td>
+                            <td class="p-2"><a href="https://www.google.com/maps/search/?api=1&query=JR錢函車站" target="_blank" class="text-blue-500 hover:text-blue-700">JR 錢函車站</a></td>
+                        </tr>
+                        <tr class="border-b bg-gray-50">
+                            <td class="p-2 font-semibold">11:30 - 12:00</td>
+                            <td class="p-2">移動至小樽。<br>
+                                <a href="#" onclick="return openRealTimeQuery('銭函', '小樽', 2025, 12, 29, 11, 30)" class="scheduled-link">🗓️ 查詢預定班次 (11:30)</a>
+                                <a href="#" onclick="return openRealTimeQuery('銭函', '小樽')" class="timetable-link">🚄 查詢即時班次</a>
+                            </td>
+                            <td class="p-2"><a href="https://www.google.com/maps/search/?api=1&query=JR小樽車站" target="_blank" class="text-blue-500 hover:text-blue-700">JR 小樽車站</a></td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="p-2 font-semibold">12:00 - 19:30</td>
+                            <td class="p-2">堺町通商店街午餐/甜點 (LeTAO) > **欣賞運河點燈 (夜景)**。</td>
+                            <td class="p-2"><a href="https://www.google.com/maps/search/?api=1&query=小樽運河" target="_blank" class="text-blue-500 hover:text-blue-700">小樽運河</a></td>
+                        </tr>
+                        <tr class="bg-gray-50">
+                            <td class="p-2 font-semibold">19:30 - 20:30</td>
+                            <td class="p-2">JR 快速列車返回札幌。<br>
+                                <a href="#" onclick="return openRealTimeQuery('小樽', '札幌', 2025, 12, 29, 19, 30)" class="scheduled-link">🗓️ 查詢預定班次 (19:30)</a>
+                                <a href="#" onclick="return openRealTimeQuery('小樽', '札幌')" class="timetable-link">🚄 查詢即時班次</a>
+                            </td>
+                            <td class="p-2"><a href="https://www.google.com/maps/search/?api=1&query=JR小樽車站" target="_blank" class="text-blue-500 hover:text-blue-700">JR 小樽車站</a></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" class="day-hint">
+                                <strong class="title">💡 本日重點</strong>
+                                <ul>
+                                    <li>冬季小樽日落非常早 (約 <strong>16:00</strong> 左右)。</li>
+                                    <li>堺町通商店街店家約在 <strong>18:00</strong> 就會關門，建議先逛街、吃甜點，傍晚再去運河看點燈。</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <!-- Day 8 ID -->
+            <div id="day-12-30" class="bg-white p-4 mb-4 rounded-lg shadow-md border-t-4 border-t-blue-500">
+                <h2 class="text-xl font-bold text-gray-800">Day 8 (12/30, 二) - 札幌市區經典 (Pass 最後一天)</h2>
+                <table class="min-w-full mt-3 text-sm">
+                    <thead><tr class="table-header rounded-t-lg"><th class="p-2 text-left">時間</th><th class="p-2 text-left">行程內容</th><th class="p-2 text-left">地點 (點擊進入地圖)</th></tr></thead>
+                    <tbody>
+                        <tr class="border-b">
+                            <td class="p-2 font-semibold">09:00 - 13:00</td>
+                            <td class="p-2">**文青咖啡 & 公園散步**：森彥咖啡 → 圓山公園 → 北海道神宮。</td>
+                            <td class="p-2">
+                                <a href="https://www.google.com/maps/search/?api=1&query=森彥咖啡" target="_blank" class="text-blue-500 hover:text-blue-700">森彥咖啡</a> / 
+                                <a href="https://www.google.com/maps/search/?api=1&query=圓山公園" target="_blank" class="text-blue-500 hover:text-blue-700">圓山公園</a> / 
+                                <a href="https://www.google.com/maps/search/?api=1&query=北海道神宮" target="_blank" class="text-blue-500 hover:text-blue-700">北海道神宮</a>
+                            </td>
+                        </tr>
+                        <tr class="border-b bg-gray-50">
+                            <td class="p-2 font-semibold">14:00 - 17:00</td>
+                            <td class="p-2">返回市中心，逛大通公園及周邊 (聖誕燈飾)。</td>
+                            <td class="p-2"><a href="https://www.google.com/maps/search/?api=1&query=大通公園" target="_blank" class="text-blue-500 hover:text-blue-700">大通公園</a></td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="p-2 font-semibold">17:00 - 21:00</td>
+                            <td class="p-2">**札幌夜景**：搭乘市電前往藻岩山看夜景 (日本新三大夜景)。</td>
+                            <td class="p-2"><a href="https://www.google.com/maps/search/?api=1&query=藻岩山" target="_blank" class="text-blue-500 hover:text-blue-700">藻岩山 (Mt. Moiwa)</a></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" class="day-hint">
+                                <strong class="title">💡 本日重點</strong>
+                                <ul>
+                                    <li>今天是 <strong>JR Pass 8日券的最後一天</strong>！(本日行程多為地鐵/市電)</li>
+                                    <li><strong>藻岩山夜景：</strong> 建議在日落前 1 小時 (約 15:00-15:30) 從市區搭乘「市電」出發 (總車程+纜車約 1 小時)，才能同時看到日景、日落和夜景。</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <!-- Day 9 ID -->
+            <div id="day-12-31" class="bg-white p-4 mb-4 rounded-lg shadow-md border-t-4 border-t-hokkaido">
+                <h2 class="text-xl font-bold text-gray-800">Day 9 (12/31, 三) - 跨年夜閒晃</h2>
+                <table class="min-w-full mt-3 text-sm">
+                    <thead><tr class="table-header rounded-t-lg"><th class="p-2 text-left">時間</th><th class="p-2 text-left">行程內容</th><th class="p-2 text-left">地點 (點擊進入地圖)</th></tr></thead>
+                    <tbody>
+                        <tr class="border-b">
+                            <td class="p-2 font-semibold">全天</td>
+                            <td class="p-2">**市區亂晃：** 札幌站周邊百貨公司，**跨年夜晚餐**。</td>
+                            <td class="p-2"><a href="https://www.google.com/maps/search/?api=1&query=札幌駅" target="_blank" class="text-blue-500 hover:text-blue-700">札幌站周邊</a></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" class="day-hint">
+                                <strong class="title">💡 本日重點</strong>
+                                <ul>
+                                    <li><strong>跨年夜 (12/31)：</strong> 百貨公司及多數店家會提早至 <strong>18:00</strong> 左右關門。</li>
+                                    <li>請提早完成購物，並確認跨年夜晚餐的營業時間。</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <!-- Day 10 ID -->
+            <div id="day-1-1" class="bg-white p-4 rounded-lg shadow-md border-t-4 border-t-hokkaido">
+                <h2 class="text-xl font-bold text-gray-800">
+                    Day 10 (1/1, 四) - 返程日
+                </h2>
+                <table class="min-w-full mt-3 text-sm">
+                    <thead><tr class="table-header rounded-t-lg"><th class="p-2 text-left">時間</th><th class="p-2 text-left">行程內容</th><th class="p-2 text-left">地點 (點擊進入地圖)</th></tr></thead>
+                    <tbody>
+                        <tr class="border-b">
+                            <td class="p-2 font-semibold">10:00 - 12:00</td>
+                            <td class="p-2">10:00 退房 > JR 快速列車移動至新千歲機場。<br>
+                                <!-- (注意年份為 2026) -->
+                                <a href="#" onclick="return openRealTimeQuery('札幌', '新千歳空港', 2026, 1, 1, 11, 0)" class="scheduled-link">🗓️ 查詢預定班次 (11:00)</a>
+                                <a href="#" onclick="return openRealTimeQuery('札幌', '新千歳空港')" class="timetable-link">🚄 查詢即時班次</a>
+                            </td>
+                            <td class="p-2"><a href="https://www.google.com/maps/search/?api=1&query=JR札幌車站" target="_blank" class="text-blue-500 hover:text-blue-700">JR 札幌車站</a></td>
+                        </tr>
+                        <tr class="border-b bg-gray-50">
+                            <td class="p-2 font-semibold">12:00 - 16:00</td>
+                            <td class="p-2">**Outlet 購物：** **三井Outlet Park 札幌北廣島**。</td>
+                            <td class="p-2"><a href="https://www.google.com/maps/search/?api=1&query=三井Outlet+Park+札幌北廣島" target="_blank" class="text-blue-500 hover:text-blue-700">三井Outlet Park 札幌北廣島</a></td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="p-2 font-semibold">16:00 - 17:00</td>
+                            <td class="p-2">返回新千歲機場，準備辦理登機手續 (TR893)。</td>
+                            <td class="p-2"><a href="https://www.google.com/maps/search/?api=1&query=新千歲機場" target="_blank" class="text-blue-500 hover:text-blue-700">新千歲機場 (CTS)</a></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" class="day-hint">
+                                <strong class="title">💡 本日重點</strong>
+                                <ul>
+                                    <li><strong>新年 (1/1)：</strong> Outlet 通常 10:00 才開門 (福袋日人潮眾多)。</li>
+                                    <li><strong>Outlet 交通：</strong> 需搭乘 JR 至「北廣島站」，再轉乘巴士 (約 25 分鐘)；或從新千歲機場搭乘直達巴士。</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </main>
+        
+        <footer class="bg-gray-100 p-4 text-center text-xs text-gray-500">
+            <p>行程建議已調整為符合您的 JR Pass 與市區閒晃需求。請務必再次確認各店家新年期間的營業時間。</p>
+        </footer>
+    </div>
+    
+</body>
+</html>
