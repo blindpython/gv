@@ -3080,4 +3080,3 @@ document.addEventListener('DOMContentLoaded', () => {
   markOverallTop10();
   renderRestaurants();
 });
-
