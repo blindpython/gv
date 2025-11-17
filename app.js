@@ -884,6 +884,7 @@ const restaurants = [
     recommendations: [{jp:"カルビ",cn:"牛小排"},{jp:"ロース",cn:"里肌"}],
     notes: "需預約，在地人常光顧。"
   },
+  {
     id: 98, name: "錢函 天ぷら", location: "錢函", category: "天婦羅",
     tabelogScore: 3.31, tabelogReviews: 160, tabelogLink: "https://tabelog.com/tw/hokkaido/A0106/A010601/1093456/dtlrvwlst/",
     googleScore: 3.8, googleReviews: 310, googleLink: "https://maps.google.com/?q=錢函%20天ぷら",
