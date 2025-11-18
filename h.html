@@ -97,6 +97,74 @@
       color: #ff9800;
       font-weight: 600;
     }
+    .nominate-section {
+      margin-bottom: 12px;
+      padding: 10px;
+      background: #f0f8ff;
+      border-radius: 10px;
+      border-left: 4px solid #2196f3;
+    }
+    .nominate-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #1565c0;
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+    }
+    .nominate-select {
+      width: 100%;
+      padding: 8px;
+      border: 2px solid #2196f3;
+      border-radius: 6px;
+      font-size: 14px;
+      color: #333;
+      background: #fff;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    .nominate-select:focus {
+      outline: none;
+      border-color: #1565c0;
+      box-shadow: 0 0 8px rgba(33, 150, 243, 0.3);
+    }
+    .dynamic-cp-section {
+      margin-top: 10px;
+      padding: 10px;
+      background: #fff9f0;
+      border-radius: 10px;
+      border-left: 4px solid #ff9800;
+      display: none;
+    }
+    .dynamic-cp-section.show {
+      display: block;
+    }
+    .dynamic-cp-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #e65100;
+      margin-bottom: 8px;
+    }
+    .dynamic-cp-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      font-size: 13px;
+    }
+    .dynamic-cp-item {
+      margin-bottom: 6px;
+      padding: 6px;
+      background: #fff;
+      border-radius: 6px;
+      color: #333;
+    }
+    .dynamic-cp-item .cp-rank {
+      font-weight: 700;
+      color: #ff6f00;
+    }
+    .dynamic-cp-item .cp-value {
+      font-weight: 600;
+      color: #f26161;
+    }
     .shop-links {
       margin-top: 12px;
       display: flex;
@@ -176,99 +244,11 @@
   <div class="mobile-list">
     <div class="shop-item">
       <div class="shop-title">
-        <a href="https://www.google.com/maps/search/FANTASY+Spa+%E6%9C%AD%E5%B9%8C" target="_blank">ソープランド ファンタジースパ FANTASY Spa</a>
-      </div>
-      <div class="fees-section">
-        <div class="fees-label">💰 時間與價格</div>
-        <ul class="fees-list">
-          <li>
-            <span class="time">70分鐘</span>
-            <div class="price-cp">
-              <span class="price">44,000日圓</span>
-              <span class="cp">657.14/分</span>
-            </div>
-          </li>
-          <li>
-            <span class="time">90分鐘</span>
-            <div class="price-cp">
-              <span class="price">55,000日圓</span>
-              <span class="cp">633.33/分</span>
-            </div>
-          </li>
-          <li>
-            <span class="time">110分鐘</span>
-            <div class="price-cp">
-              <span class="price">68,000日圓</span>
-              <span class="cp">636.36/分</span>
-            </div>
-          </li>
-          <li>
-            <span class="time">指名費</span>
-            <span class="price">2,000日圓</span>
-          </li>
-        </ul>
-      </div>
-      <div class="note">
-        <div class="note-title">📋 推薦前三：</div>
-        🥇 90分鐘 | 🥈 110分鐘 | 🥉 70分鐘
-      </div>
-      <div class="shop-links">
-        <a href="https://www.cityheaven.net/hokkaido/A0101/A010103/fantasispa/attend/" target="_blank">出勤查詢</a>
-        <a href="https://line.me/ti/p/GpYCQJr92B" target="_blank">LINE聯絡</a>
-      </div>
-    </div>
-
-    <div class="shop-item">
-      <div class="shop-title">
-        <a href="https://www.google.com/maps/search/Happiness+Sapporo+%E6%9C%AD%E5%B9%8C" target="_blank">ハピネス札幌 Happiness Sapporo</a>
-      </div>
-      <div class="fees-section">
-        <div class="fees-label">💰 時間與價格</div>
-        <ul class="fees-list">
-          <li>
-            <span class="time">60分鐘</span>
-            <div class="price-cp">
-              <span class="price">30,000日圓</span>
-              <span class="cp">550/分</span>
-            </div>
-          </li>
-          <li>
-            <span class="time">75分鐘</span>
-            <div class="price-cp">
-              <span class="price">38,000日圓</span>
-              <span class="cp">546.67/分</span>
-            </div>
-          </li>
-          <li>
-            <span class="time">90分鐘</span>
-            <div class="price-cp">
-              <span class="price">46,000日圓</span>
-              <span class="cp">544.44/分</span>
-            </div>
-          </li>
-          <li>
-            <span class="time">指名費</span>
-            <span class="price">3,000日圓</span>
-          </li>
-        </ul>
-      </div>
-      <div class="note">
-        <div class="note-title">📋 推薦前三：</div>
-        🥇 60分鐘 | 🥈 75分鐘 | 🥉 90分鐘
-      </div>
-      <div class="shop-links">
-        <a href="https://fujoho.jp/index.php?p=shop_info&id=59887" target="_blank">出勤查詢</a>
-        <a href="https://lin.ee/qMmPn8x" target="_blank">LINE聯絡</a>
-      </div>
-    </div>
-
-    <div class="shop-item">
-      <div class="shop-title">
         <a href="https://www.google.com/maps/search/salon+de+M+%E6%9C%AD%E5%B9%8C" target="_blank">サロンドエム salon de M</a>
       </div>
       <div class="fees-section">
         <div class="fees-label">💰 時間與價格</div>
-        <ul class="fees-list">
+        <ul class="fees-list" id="defaultFeesList">
           <li>
             <span class="time">70分鐘</span>
             <div class="price-cp">
@@ -292,9 +272,36 @@
           </li>
         </ul>
       </div>
+
+      <div class="nominate-section">
+        <div class="nominate-label">🎯 選擇指名費</div>
+        <select class="nominate-select" id="nominateFeeSelect" onchange="updateCPValues()">
+          <option value="0">無指名費 (0日元)</option>
+          <option value="2000">2,000日元</option>
+          <option value="3000">3,000日元</option>
+          <option value="4000">4,000日元</option>
+          <option value="5000">5,000日元</option>
+        </select>
+      </div>
+
+      <div class="dynamic-cp-section show" id="dynamicCPSection">
+        <div class="dynamic-cp-label">⭐ 動態 CP 值計算 (單分鐘)</div>
+        <ul class="dynamic-cp-list" id="dynamicCPList">
+          <li class="dynamic-cp-item">
+            <span class="cp-rank">🥇 70分鐘</span> — <span class="cp-value">614.29/分</span>
+          </li>
+          <li class="dynamic-cp-item">
+            <span class="cp-rank">🥈 90分鐘</span> — <span class="cp-value">611.11/分</span>
+          </li>
+          <li class="dynamic-cp-item">
+            <span class="cp-rank">🥉 110分鐘</span> — <span class="cp-value">618.18/分</span>
+          </li>
+        </ul>
+      </div>
+
       <div class="note">
         <div class="note-title">📋 推薦前三：</div>
-        🥇 90分鐘 | 🥈 70分鐘 | 🥉 110分鐘
+        <span id="recommendText">🥇 90分鐘 | 🥈 70分鐘 | 🥉 110分鐘</span>
       </div>
       <div class="shop-links">
         <a href="https://www.cityheaven.net/hokkaido/A0101/A010103/soap_q/attend/" target="_blank">出勤查詢</a>
@@ -307,5 +314,62 @@
       <a href="https://yoasobi-heaven.com/heaven-chat/home" target="_blank">線上翻譯聊天點此</a>
     </div>
   </div>
+
+  <script>
+    const prices = {
+      70: 43000,
+      90: 55000,
+      110: 68000
+    };
+
+    function updateCPValues() {
+      const nominateFee = parseInt(document.getElementById('nominateFeeSelect').value);
+      const dynamicCPList = document.getElementById('dynamicCPList');
+      
+      // 計算所有方案的 CP 值
+      const cpValues = [];
+      
+      for (let minutes in prices) {
+        minutes = parseInt(minutes);
+        const price = prices[minutes];
+        const singleMinuteCp = (nominateFee + price) / minutes;
+        const doubleMinuteCp = (nominateFee + price + price) / (minutes * 2);
+        
+        cpValues.push({
+          minutes: minutes,
+          singleCp: singleMinuteCp,
+          doubleCp: doubleMinuteCp,
+          minCp: Math.min(singleMinuteCp, doubleCp)
+        });
+      }
+      
+      // 按最低 CP 值排序
+      cpValues.sort((a, b) => a.minCp - b.minCp);
+      
+      // 更新動態 CP 值顯示
+      let html = '';
+      const ranks = ['🥇', '🥈', '🥉'];
+      
+      for (let i = 0; i < cpValues.length; i++) {
+        const cp = cpValues[i];
+        const singleCpText = cp.singleCp.toFixed(2);
+        const doubleCpText = cp.doubleCp.toFixed(2);
+        
+        html += `<li class="dynamic-cp-item">
+          <span class="cp-rank">${ranks[i]} ${cp.minutes}分鐘</span> — 
+          <span class="cp-value">單${singleCpText} / 相${doubleCpText}</span>
+        </li>`;
+      }
+      
+      dynamicCPList.innerHTML = html;
+      
+      // 更新推薦文字
+      const recommendText = document.getElementById('recommendText');
+      recommendText.textContent = `🥇 ${cpValues[0].minutes}分鐘 | 🥈 ${cpValues[1].minutes}分鐘 | 🥉 ${cpValues[2].minutes}分鐘`;
+    }
+
+    // 初始化
+    updateCPValues();
+  </script>
 </body>
 </html>
