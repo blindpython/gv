@@ -3,153 +3,535 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>札幌泡泡浴店家清單</title>
+  <title>札幌泡泡浴精選</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
-    body { background:#f0f4fb;}
-    .mobile-list {
-      max-width: 480px;
-      margin: 32px auto;
-      background: #fff;
-      border-radius: 20px;
-      box-shadow: 0 4px 28px rgba(60,110,255,0.07);
-      font-size: 16px;
-      padding: 22px 14px 18px 14px;
+    :root {
+      --primary: #3b82f6;
+      --primary-dark: #2563eb;
+      --accent: #ef4444;
+      --bg-color: #f3f4f6;
+      --card-bg: #ffffff;
+      --text-main: #1f2937;
+      --text-sub: #6b7280;
     }
-    .shop-item {
-      background: linear-gradient(110deg,#eff6ff 50%,#f8fdff 100%);
-      border-radius: 18px;
-      padding: 18px 12px 15px 16px;
-      margin-bottom: 18px;
-      box-shadow: 0 2px 18px rgba(36, 139, 242,0.07);
+
+    body {
+      background-color: var(--bg-color);
+      font-family: 'Noto Sans TC', sans-serif;
+      margin: 0;
+      padding: 20px 16px;
+      color: var(--text-main);
     }
-    .shop-title {
-      font-size: 19px;
-      font-weight: 700;
-      color: #207be0;
-      margin-bottom: 12px;
-      letter-spacing: 1px;
+
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* 卡片通用樣式 */
+    .shop-card {
+      background: var(--card-bg);
+      border-radius: 24px;
+      padding: 24px 20px;
+      margin-bottom: 24px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s;
+    }
+
+    .shop-card:active {
+      transform: scale(0.99);
+    }
+
+    /* 標題區 */
+    .shop-header {
       display: flex;
       align-items: center;
-      gap: 8px;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #f0f0f0;
     }
-    .shop-title:before { content: "🏢"; font-size: 22px; }
-    .shop-title a { color: #207be0; text-decoration: none; cursor: pointer; }
-    .shop-title a:hover { color: #f26161; text-decoration: underline; }
-    .fees-section { margin-bottom: 12px; }
-    .fees-label { font-size: 14px; font-weight: 600; color: #666; margin-bottom: 8px; }
-    .fees-list { margin: 0; padding: 0; list-style: none; font-size: 15px; }
-    .fees-list li { padding: 4px 0; border-bottom: 1px solid #e8eef7; display: flex; justify-content: space-between; }
-    .fees-list li:last-child { border-bottom: none; }
-    .price-cp { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
-    .fees-list .price { color: #f26161; font-weight: 700; }
-    .fees-list .cp { font-size: 12px; color: #ff9800; font-weight: 600; }
-    .nominate-section { margin-bottom: 12px; padding: 10px; background: #f0f8ff; border-radius: 10px; border-left: 4px solid #2196f3; }
-    .nominate-label { font-size: 13px; font-weight: 600; color: #1565c0; margin-bottom: 8px; }
-    .nominate-select { width: 100%; padding: 8px; border: 2px solid #2196f3; border-radius: 6px; font-size: 14px; color: #333; background: #fff; cursor: pointer; font-weight: 500; }
-    .dynamic-cp-section { margin-top: 10px; padding: 10px; background: #fff9f0; border-radius: 10px; border-left: 4px solid #ff9800; }
-    .dynamic-cp-label { font-size: 13px; font-weight: 600; color: #e65100; margin-bottom: 8px; }
-    .dynamic-cp-list { margin: 0; padding: 0; list-style: none; font-size: 12px; display: flex; flex-wrap: wrap; gap: 8px; }
-    .dynamic-cp-item { padding: 6px 10px; background: #fff; border-radius: 6px; flex: 1; min-width: 110px; }
-    .cp-rank { font-weight: 700; color: #ff6f00; margin-right: 4px; }
-    .cp-time { font-weight: 600; color: #1e88e5; }
-    .cp-value { font-weight: 600; color: #f26161; margin-left: 4px; }
-    .shop-links { margin-top: 12px; display: flex; gap: 12px; flex-wrap: wrap; }
-    .shop-links a { display: inline-block; padding: 7px 17px; background: linear-gradient(90deg,#207be0 80%,#31b5ff 100%); color: #fff; font-weight: 600; border-radius: 20px; text-decoration: none; font-size: 15px; transition: background 0.22s; cursor: pointer; }
-    .shop-links a:hover { background: linear-gradient(90deg,#31b5ff 20%,#207be0 100%); }
-    .note { color: #888; font-size: 13px; margin-top: 8px; padding: 8px; background: #f8f9fc; border-left: 3px solid #31b5ff; border-radius: 4px; }
-    .note-title { font-weight: 600; color: #1e88e5; margin-bottom: 4px; }
-    .translation-chat { margin-top: 36px; padding: 17px 16px; background: linear-gradient(90deg,#eaf6ff 70%,#c0eaff 100%); border-radius: 15px; box-shadow: 0 1px 10px rgba(44,159,255,0.09); text-align: center; font-size: 17px; color: #1e88e5; font-weight: 500; letter-spacing: 2px; position: relative; }
-    .translation-chat:before { content: "🌐"; font-size: 21px; position: absolute; left: 16px; top: 16px; }
-    .translation-chat a { display: inline-block; margin-top: 11px; padding: 9px 30px; background: linear-gradient(90deg,#31b5ff 55%,#207be0 100%); color: #fff; font-weight: bold; border-radius: 20px; text-decoration: none; font-size: 16px; letter-spacing: 2px; transition: background 0.23s; }
-    .translation-chat a:hover { background: linear-gradient(90deg,#207be0 35%,#31b5ff 100%); }
+
+    .shop-icon {
+      font-size: 28px;
+      margin-right: 12px;
+      background: #eff6ff;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+    }
+
+    .shop-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-main);
+      text-decoration: none;
+      line-height: 1.4;
+      flex: 1;
+    }
+
+    .shop-name:hover {
+      color: var(--primary);
+    }
+
+    /* 價格列表 */
+    .price-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 20px 0;
+    }
+
+    .price-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px dashed #e5e7eb;
+    }
+
+    .price-item:last-child {
+      border-bottom: none;
+    }
+
+    .time-badge {
+      background: #f3f4f6;
+      color: var(--text-main);
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .price-info {
+      text-align: right;
+    }
+
+    .main-price {
+      display: block;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .sub-cp {
+      display: block;
+      font-size: 12px;
+      color: var(--text-sub);
+      margin-top: 2px;
+      font-weight: 500;
+    }
+    
+    .sub-cp span {
+      color: #f59e0b; /* Orange for CP value */
+    }
+
+    /* 推薦區塊 */
+    .recommend-box {
+      background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+      border-radius: 16px;
+      padding: 16px;
+      margin-top: 10px;
+      border: 1px solid #bfdbfe;
+    }
+
+    .rec-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    
+    .rec-content {
+      font-size: 14px;
+    }
+
+    .combo-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+      align-items: center;
+    }
+    
+    .combo-row:last-child { margin-bottom: 0; }
+
+    .combo-name {
+      font-weight: 500;
+      color: #374151;
+    }
+
+    .rank-badge {
+      display: inline-block;
+      width: 20px;
+      text-align: center;
+      margin-right: 4px;
+    }
+
+    .combo-val {
+      font-weight: 700;
+      color: var(--accent);
+      font-size: 13px;
+    }
+
+    /* 連結按鈕區 */
+    .action-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .btn {
+      flex: 1;
+      text-align: center;
+      padding: 10px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .btn-attend {
+      background: #f3f4f6;
+      color: var(--text-sub);
+    }
+    
+    .btn-attend:hover { background: #e5e7eb; color: #333; }
+
+    .btn-line {
+      background: #06c755;
+      color: white;
+    }
+    
+    .btn-line:hover { background: #05b34c; }
+
+    /* Salon 下拉選單美化 */
+    .salon-control {
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    .salon-select {
+      border: 1px solid #d1d5db;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      background: white;
+      color: #4b5563;
+      outline: none;
+      cursor: pointer;
+    }
+    
+    /* 固定指名費標籤 */
+    .fee-badge {
+      font-size: 13px; 
+      color: #666; 
+      background: #f0f0f0; 
+      padding: 6px 12px; 
+      border-radius: 20px; 
+      font-weight: 500;
+    }
+
+    /* 底部翻譯區 */
+    .translate-fab {
+      background: white;
+      border-radius: 20px;
+      padding: 15px;
+      text-align: center;
+      margin-top: 30px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    .translate-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--primary);
+      font-weight: 700;
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
-  <div class="mobile-list">
-    <!-- FANTASY Spa -->
-    <div class="shop-item">
-      <div class="shop-title"><a href="https://www.google.com/maps/search/ソープランド+ファンタジースパ+札幌" target="_blank">ソープランド ファンタジースパ FANTASY Spa</a></div>
-      <div class="fees-section">
-        <div class="fees-label">💰 時間與價格</div>
-        <ul class="fees-list">
-          <li><span>70分鐘</span><div class="price-cp"><span class="price">44,000日圓</span><span class="cp">657.14/分</span></div></li>
-          <li><span>90分鐘</span><div class="price-cp"><span class="price">55,000日圓</span><span class="cp">633.33/分</span></div></li>
-          <li><span>110分鐘</span><div class="price-cp"><span class="price">68,000日圓</span><span class="cp">636.36/分</span></div></li>
-        </ul>
-      </div>
-      <div class="dynamic-cp-section">
-        <div class="dynamic-cp-label">⭐ CP 值排序</div>
-        <ul class="dynamic-cp-list">
-          <li class="dynamic-cp-item"><span class="cp-rank">🥇</span><span class="cp-time">90分</span> <span class="cp-value">622.22</span></li>
-          <li class="dynamic-cp-item"><span class="cp-rank">🥈</span><span class="cp-time">110分</span> <span class="cp-value">627.27</span></li>
-          <li class="dynamic-cp-item"><span class="cp-rank">🥉</span><span class="cp-time">70分</span> <span class="cp-value">642.86</span></li>
-        </ul>
-      </div>
-      <div class="note"><div class="note-title">📋 推薦前三：</div>🥇 90分鐘 | 🥈 110分鐘 | 🥉 70分鐘</div>
-      <div class="shop-links">
-        <a href="https://www.cityheaven.net/hokkaido/A0101/A010103/fantasispa/attend/" target="_blank">出勤查詢</a>
-        <a href="https://line.me/ti/p/GpYCQJr92B" target="_blank">LINE聯絡</a>
-      </div>
+
+<div class="container">
+
+  <!-- FANTASY Spa -->
+  <div class="shop-card">
+    <div class="shop-header">
+      <div class="shop-icon">🏰</div>
+      <a href="https://www.google.com/maps/search/?api=1&query=FANTASY+Spa+Sapporo+Susukino" target="_blank" class="shop-name">
+        FANTASY Spa<br><span style="font-size:13px; font-weight:400; color:#888;">ファンタジースパ</span>
+      </a>
     </div>
 
-    <!-- Happiness Sapporo -->
-    <div class="shop-item">
-      <div class="shop-title"><a href="https://www.google.com/maps/search/ハピネス札幌" target="_blank">ハピネス札幌 Happiness Sapporo</a></div>
-      <div class="fees-section">
-        <div class="fees-label">💰 時間與價格</div>
-        <ul class="fees-list">
-          <li><span>60分鐘</span><div class="price-cp"><span class="price">30,000日圓</span><span class="cp">550/分</span></div></li>
-          <li><span>75分鐘</span><div class="price-cp"><span class="price">38,000日圓</span><span class="cp">546.67/分</span></div></li>
-          <li><span>90分鐘</span><div class="price-cp"><span class="price">46,000日圓</span><span class="cp">544.44/分</span></div></li>
-        </ul>
-      </div>
-      <div class="dynamic-cp-section">
-        <div class="dynamic-cp-label">⭐ CP 值排序</div>
-        <ul class="dynamic-cp-list">
-          <li class="dynamic-cp-item"><span class="cp-rank">🥇</span><span class="cp-time">60分</span> <span class="cp-value">525</span></li>
-          <li class="dynamic-cp-item"><span class="cp-rank">🥈</span><span class="cp-time">75分</span> <span class="cp-value">526.67</span></li>
-          <li class="dynamic-cp-item"><span class="cp-rank">🥉</span><span class="cp-time">90分</span> <span class="cp-value">527.78</span></li>
-        </ul>
-      </div>
-      <div class="note"><div class="note-title">📋 推薦前三：</div>🥇 60分鐘 | 🥈 60+60分鐘(120分) | 🥉 75+75分鐘(150分)</div>
-      <div class="shop-links">
-        <a href="https://fujoho.jp/index.php?p=shop_info&id=59887" target="_blank">出勤查詢</a>
-        <a href="https://lin.ee/qMmPn8x" target="_blank">LINE聯絡</a>
-      </div>
+    <div class="salon-control">
+      <span class="fee-badge">指名費 2,000日圓 (已固定)</span>
     </div>
 
-    <!-- salon de M -->
-    <div class="shop-item">
-      <div class="shop-title"><a href="https://www.google.com/maps/search/salon+de+M+札幌" target="_blank">サロンドエム salon de M</a></div>
-      <div class="fees-section">
-        <div class="fees-label">💰 時間與價格</div>
-        <ul class="fees-list" id="salonFeesList">
-          <li><span>70分鐘</span><div class="price-cp"><span class="price">43,000日元</span><span class="cp" data-minutes="70" data-base-price="43000">614.29/分</span></div></li>
-          <li><span>90分鐘</span><div class="price-cp"><span class="price">55,000日元</span><span class="cp" data-minutes="90" data-base-price="55000">611.11/分</span></div></li>
-          <li><span>110分鐘</span><div class="price-cp"><span class="price">68,000日元</span><span class="cp" data-minutes="110" data-base-price="68000">618.18/分</span></div></li>
-        </ul>
-      </div>
+    <ul class="price-list" id="fantasyFeesList">
+      <li class="price-item">
+        <span class="time-badge">70分</span>
+        <div class="price-info">
+          <span class="main-price" id="p_fan_70">--</span>
+          <span class="sub-cp">CP <span id="cp_fan_70">--</span></span>
+        </div>
+      </li>
+      <li class="price-item">
+        <span class="time-badge">90分</span>
+        <div class="price-info">
+          <span class="main-price" id="p_fan_90">--</span>
+          <span class="sub-cp">CP <span id="cp_fan_90">--</span></span>
+        </div>
+      </li>
+      <li class="price-item">
+        <span class="time-badge">110分</span>
+        <div class="price-info">
+          <span class="main-price" id="p_fan_110">--</span>
+          <span class="sub-cp">CP <span id="cp_fan_110">--</span></span>
+        </div>
+      </li>
+    </ul>
 
-      <div class="nominate-section">
-        <div class="nominate-label">🎯 選擇指名費</div>
-        <select class="nominate-select" id="salonSelect" onchange="updateSalonCP()">
-          <option value="0">無指名費 (0日元)</option>
-          <option value="2000">2,000日元</option>
-          <option value="3000">3,000日元</option>
-          <option value="4000">4,000日元</option>
-          <option value="5000">5,000日元</option>
-        </select>
-      </div>
+    <div class="recommend-box">
+      <div class="rec-title">💡 最佳延長組合 (含一次指名)</div>
+      <div class="rec-content" id="fantasyRecommendText">計算中...</div>
+    </div>
 
-      <div class="dynamic-cp-section">
-        <div class="dynamic-cp-label">⭐ CP 值排序</div>
-        <ul class="dynamic-cp-list" id="salonCPList">
-          <li class="dynamic-cp-item"><span class="cp-rank">🥇</span><span class="cp-time">90分</span> <span class="cp-value">611.11</span></li>
-          <li class="dynamic-cp-item"><span class="cp-rank">🥈</span><span class="cp-time">70分</span> <span class="cp-value">614.29</span></li>
-          <li class="dynamic-cp-item"><span class="cp-rank">🥉</span><span class="cp-time">110分</span> <span class="cp-value">618.18</span></li>
-        </ul>
-      </div>
-      <div class="note"><div class="note-title">📋 推薦前三：</div><span id="salonRecommend">🥇 90分鐘 | 🥈 90+90分鐘(180分) | 🥉 70+70分鐘(140分)</span></div>
-      <div class="shop-links">
-        <a href="https://www.cityheaven.net/hokkaido/A0101/A010103/soap_q/attend/" target="_blank">出勤查詢</a>
-        <a href="https://line.me/ti/p/iSXPYiUL5j" target="_blank">LINE聯
+    <div class="action-buttons">
+      <a href="https://www.cityheaven.net/hokkaido/A0101/A010103/fantasispa/attend/" target="_blank" class="btn btn-attend">出勤表</a>
+      <a href="https://line.me/ti/p/GpYCQJr92B" target="_blank" class="btn btn-line">LINE 預約</a>
+    </div>
+  </div>
+
+  <!-- Happiness Sapporo -->
+  <div class="shop-card">
+    <div class="shop-header">
+      <div class="shop-icon">🍀</div>
+      <a href="https://www.google.com/maps/search/?api=1&query=Happiness+Sapporo+Soapland" target="_blank" class="shop-name">
+        Happiness Sapporo<br><span style="font-size:13px; font-weight:400; color:#888;">ハピネス札幌</span>
+      </a>
+    </div>
+    
+    <div class="salon-control">
+      <span class="fee-badge">指名費 2,000日圓 (已固定)</span>
+    </div>
+
+    <ul class="price-list" id="happinessFeesList">
+      <li class="price-item">
+        <span class="time-badge">60分</span>
+        <div class="price-info">
+          <span class="main-price" id="p_hap_60">--</span>
+          <span class="sub-cp">CP <span id="cp_hap_60">--</span></span>
+        </div>
+      </li>
+      <li class="price-item">
+        <span class="time-badge">75分</span>
+        <div class="price-info">
+          <span class="main-price" id="p_hap_75">--</span>
+          <span class="sub-cp">CP <span id="cp_hap_75">--</span></span>
+        </div>
+      </li>
+      <li class="price-item">
+        <span class="time-badge">90分</span>
+        <div class="price-info">
+          <span class="main-price" id="p_hap_90">--</span>
+          <span class="sub-cp">CP <span id="cp_hap_90">--</span></span>
+        </div>
+      </li>
+    </ul>
+
+    <div class="recommend-box">
+      <div class="rec-title">💡 最佳延長組合 (含一次指名)</div>
+      <div class="rec-content" id="happinessRecommendText">計算中...</div>
+    </div>
+
+    <div class="action-buttons">
+      <a href="https://fujoho.jp/index.php?p=shop_info&id=59887" target="_blank" class="btn btn-attend">出勤表</a>
+      <a href="https://lin.ee/qMmPn8x" target="_blank" class="btn btn-line">LINE 預約</a>
+    </div>
+  </div>
+
+  <!-- Salon de M -->
+  <div class="shop-card">
+    <div class="shop-header">
+      <div class="shop-icon">🎩</div>
+      <a href="https://www.google.com/maps/search/?api=1&query=Salon+de+M+Sapporo+Susukino" target="_blank" class="shop-name">
+        Salon de M<br><span style="font-size:13px; font-weight:400; color:#888;">サロンドエム</span>
+      </a>
+    </div>
+
+    <div class="salon-control">
+      <select class="salon-select" id="salonSelect" onchange="updateSalonCP()">
+        <option value="0">指名費: ¥0</option>
+        <option value="1000">指名費: ¥1,000</option>
+        <option value="2000">指名費: ¥2,000</option>
+        <option value="3000">指名費: ¥3,000</option>
+        <option value="4000">指名費: ¥4,000</option>
+        <option value="5000">指名費: ¥5,000</option>
+      </select>
+    </div>
+
+    <ul class="price-list" id="salonFeesList">
+      <li class="price-item">
+        <span class="time-badge">70分</span>
+        <div class="price-info">
+          <span class="main-price" id="p_70">--</span>
+          <span class="sub-cp">CP <span id="cp_70">--</span></span>
+        </div>
+      </li>
+      <li class="price-item">
+        <span class="time-badge">90分</span>
+        <div class="price-info">
+          <span class="main-price" id="p_90">--</span>
+          <span class="sub-cp">CP <span id="cp_90">--</span></span>
+        </div>
+      </li>
+      <li class="price-item">
+        <span class="time-badge">110分</span>
+        <div class="price-info">
+          <span class="main-price" id="p_110">--</span>
+          <span class="sub-cp">CP <span id="cp_110">--</span></span>
+        </div>
+      </li>
+    </ul>
+
+    <div class="recommend-box">
+      <div class="rec-title">💡 最佳延長組合 (含一次指名)</div>
+      <div class="rec-content" id="salonRecommendText">計算中...</div>
+    </div>
+    
+    <div class="action-buttons">
+      <a href="https://www.cityheaven.net/hokkaido/A0101/A010103/soap_q/attend/" target="_blank" class="btn btn-attend">出勤表</a>
+      <a href="https://line.me/ti/p/iSXPYiUL5j" target="_blank" class="btn btn-line">LINE 預約</a>
+    </div>
+  </div>
+
+  <div class="translate-fab">
+    <a href="https://yoasobi-heaven.com/heaven-chat/home" target="_blank" class="translate-link">
+      🌐 開啟日文翻譯聊天室
+    </a>
+  </div>
+
+</div>
+
+<script>
+  const fmt = (num) => num.toLocaleString();
+
+  // 核心算法：計算組合 (C1 + C2 + Fee) / (M1 + M2)
+  function calculateCombinations(courses, fee) {
+    let combos = [];
+    for(let i=0; i<courses.length; i++) {
+      for(let j=i; j<courses.length; j++) {
+        const c1 = courses[i];
+        const c2 = courses[j];
+        const totalMin = c1.min + c2.min;
+        const totalPrice = c1.price + c2.price + fee;
+        const cp = totalPrice / totalMin;
+        combos.push({
+          name: `${c1.min}+${c2.min}`,
+          totalMin: totalMin,
+          cp: cp
+        });
+      }
+    }
+    combos.sort((a, b) => a.cp - b.cp);
+    return combos.slice(0, 3);
+  }
+
+  // 渲染推薦區塊
+  function renderRecommend(elementId, topCombos) {
+    const el = document.getElementById(elementId);
+    const medals = ['🥇', '🥈', '🥉'];
+    let html = '';
+    topCombos.forEach((item, idx) => {
+      html += `
+        <div class="combo-row">
+          <span class="combo-name"><span class="rank-badge">${medals[idx]}</span>${item.name}分</span>
+          <span class="combo-val">${item.cp.toFixed(1)} /分</span>
+        </div>
+      `;
+    });
+    el.innerHTML = html;
+  }
+
+  // --- FANTASY Spa ---
+  const fantasyBasePrices = [
+    { min: 70, price: 44000 },
+    { min: 90, price: 55000 },
+    { min: 110, price: 68000 }
+  ];
+
+  function updateFantasyCP() {
+    const fee = 2000;
+    // 更新列表價格 (含指名費)
+    fantasyBasePrices.forEach(item => {
+      let finalPrice = item.price + fee;
+      let cp = finalPrice / item.min;
+      document.getElementById(`p_fan_${item.min}`).textContent = `¥${fmt(finalPrice)}`;
+      document.getElementById(`cp_fan_${item.min}`).textContent = cp.toFixed(1);
+    });
+    // 計算並顯示推薦組合
+    const topCombos = calculateCombinations(fantasyBasePrices, fee);
+    renderRecommend('fantasyRecommendText', topCombos);
+  }
+
+  // --- Happiness Sapporo ---
+  const happinessBasePrices = [
+    { min: 60, price: 30000 },
+    { min: 75, price: 38000 },
+    { min: 90, price: 46000 }
+  ];
+
+  function updateHappinessCP() {
+    const fee = 2000;
+    happinessBasePrices.forEach(item => {
+      let finalPrice = item.price + fee;
+      let cp = finalPrice / item.min;
+      document.getElementById(`p_hap_${item.min}`).textContent = `¥${fmt(finalPrice)}`;
+      document.getElementById(`cp_hap_${item.min}`).textContent = cp.toFixed(1);
+    });
+    const topCombos = calculateCombinations(happinessBasePrices, fee);
+    renderRecommend('happinessRecommendText', topCombos);
+  }
+
+  // --- Salon de M ---
+  const salonBasePrices = [
+    { min: 70, price: 43000 },
+    { min: 90, price: 55000 },
+    { min: 110, price: 68000 }
+  ];
+
+  function updateSalonCP() {
+    const feeSelect = document.getElementById('salonSelect');
+    const fee = parseInt(feeSelect.value) || 0;
+
+    salonBasePrices.forEach(item => {
+      let finalPrice = item.price + fee;
+      let cp = finalPrice / item.min;
+      document.getElementById(`p_${item.min}`).textContent = `¥${fmt(finalPrice)}`;
+      document.getElementById(`cp_${item.min}`).textContent = cp.toFixed(1);
+    });
+
+    const topCombos = calculateCombinations(salonBasePrices, fee);
+    renderRecommend('salonRecommendText', topCombos);
+  }
+
+  // 初始化
+  window.onload = function() {
+    updateFantasyCP();
+    updateHappinessCP();
+    updateSalonCP();
+  }
+</script>
+</body>
+</html>
