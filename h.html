@@ -1,164 +1,173 @@
-<style>
-body { background:#f0f4fb;}
-.mobile-list {
-  max-width: 480px;
-  margin: 32px auto;
-  background: #fff;
-  border-radius: 20px;
-  box-shadow: 0 4px 28px rgba(60,110,255,0.07);
-  font-size: 16px;
-  padding: 22px 14px 18px 14px;
-}
-.shop-item {
-  background: linear-gradient(110deg,#eff6ff 50%,#f8fdff 100%);
-  border-radius: 18px;
-  padding: 18px 12px 15px 16px;
-  margin-bottom: 18px;
-  box-shadow: 0 2px 18px rgba(36, 139, 242,0.07);
-  position: relative;
-}
-.shop-item:last-child { margin-bottom:0; }
-.shop-title {
-  font-size: 19px;
-  font-weight: 700;
-  color: #207be0;
-  margin-bottom: 4px;
-  letter-spacing: 1px;
-  display: flex;
-  align-items: center;
-  gap:6px;
-}
-.shop-title:before {
-  content: "🏢";
-  font-size: 22px;
-  vertical-align: middle;
-}
-.fees-list {
-  margin: 0 0 10px 0;
-  padding:0;
-  list-style: none;
-  color:#223;
-  font-size:15px;
-}
-.fees-list li {
-  margin-bottom: 2px;
-  padding-left: 1em;
-  position: relative;
-}
-.fees-list li:before {
-  content: "💰";
-  position: absolute;
-  left:0;
-  font-size: 14px;
-}
-.shop-links {
-  margin-top: 10px;
-  display: flex;
-  gap: 12px;
-}
-.shop-links a {
-  display:inline-block;
-  padding: 7px 17px;
-  background: linear-gradient(90deg,#207be0 80%,#31b5ff 100%);
-  color: #fff;
-  font-weight: 600;
-  border-radius: 20px;
-  text-decoration: none;
-  font-size: 15px;
-  box-shadow: 0 1px 6px rgba(60,110,255,0.06);
-  transition: background 0.22s;
-  letter-spacing:1px;
-}
-.shop-links a:hover {
-  background: linear-gradient(90deg,#31b5ff 20%,#207be0 100%);
-}
-.note {
-  color:#888;
-  font-size:14px;
-  margin-top:8px;
-  padding-left: 1.6em;
-}
-.translation-chat {
-  margin-top: 36px;
-  padding: 17px 16px;
-  background: linear-gradient(90deg,#eaf6ff 70%,#c0eaff 100%);
-  border-radius: 15px;
-  box-shadow: 0 1px 10px rgba(44,159,255,0.09);
-  text-align: center;
-  font-size: 17px;
-  color: #1e88e5;
-  font-weight: 500;
-  letter-spacing: 2px;
-  position: relative;
-}
-.translation-chat:before {
-  content: "🌐";
-  font-size: 21px;
-  position: absolute;
-  left:16px;
-  top:16px;
-}
-.translation-chat a {
-  display:inline-block;
-  margin-top: 11px;
-  padding: 9px 30px;
-  background: linear-gradient(90deg,#31b5ff 55%,#207be0 100%);
-  color: #fff;
-  font-weight: bold;
-  border-radius: 20px;
-  text-decoration: none;
-  font-size: 16px;
-  letter-spacing: 2px;
-  transition: background 0.23s;
-}
-.translation-chat a:hover {
-  background: linear-gradient(90deg,#207be0 35%,#31b5ff 100%);
-}
-</style>
-
-<div class="mobile-list">
-  <div class="shop-item">
-    <div class="shop-title">ソープランド ファンタジースパ FANTASY Spa泡泡浴</div>
-    <ul class="fees-list">
-      <li>70分鐘：44,000日圓</li>
-      <li>90分鐘：55,000日圓</li>
-      <li>110分鐘：68,000日圓</li>
-      <li>延長20分鐘：12,000日圓</li>
-      <li>指名費用：2,000日圓</li>
-    </ul>
-    <div class="shop-links">
-      <a href="https://www.cityheaven.net/hokkaido/A0101/A010103/fantasispa/attend/" target="_blank">出勤查詢</a>
-      <a href="https://line.me/ti/p/GpYCQJr92B" target="_blank">LINE聯絡</a>
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>札幌泡泡浴店家清單</title>
+  <style>
+    body { background:#f0f4fb;}
+    .mobile-list {
+      max-width: 480px;
+      margin: 32px auto;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 4px 28px rgba(60,110,255,0.07);
+      font-size: 16px;
+      padding: 22px 14px 18px 14px;
+    }
+    .shop-item {
+      background: linear-gradient(110deg,#eff6ff 50%,#f8fdff 100%);
+      border-radius: 18px;
+      padding: 18px 12px 15px 16px;
+      margin-bottom: 18px;
+      box-shadow: 0 2px 18px rgba(36, 139, 242,0.07);
+      position: relative;
+    }
+    .shop-item:last-child { margin-bottom:0; }
+    .shop-title {
+      font-size: 19px;
+      font-weight: 700;
+      color: #207be0;
+      margin-bottom: 4px;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap:6px;
+    }
+    .shop-title:before {
+      content: "🏢";
+      font-size: 22px;
+      vertical-align: middle;
+    }
+    .fees-list {
+      margin: 0 0 10px 0;
+      padding:0;
+      list-style: none;
+      color:#223;
+      font-size:15px;
+    }
+    .fees-list li {
+      margin-bottom: 2px;
+      padding-left: 1em;
+      position: relative;
+    }
+    .fees-list li:before {
+      content: "💰";
+      position: absolute;
+      left:0;
+      font-size: 14px;
+    }
+    .shop-links {
+      margin-top: 10px;
+      display: flex;
+      gap: 12px;
+    }
+    .shop-links a {
+      display:inline-block;
+      padding: 7px 17px;
+      background: linear-gradient(90deg,#207be0 80%,#31b5ff 100%);
+      color: #fff;
+      font-weight: 600;
+      border-radius: 20px;
+      text-decoration: none;
+      font-size: 15px;
+      box-shadow: 0 1px 6px rgba(60,110,255,0.06);
+      transition: background 0.22s;
+      letter-spacing:1px;
+    }
+    .shop-links a:hover {
+      background: linear-gradient(90deg,#31b5ff 20%,#207be0 100%);
+    }
+    .note {
+      color:#888;
+      font-size:14px;
+      margin-top:8px;
+      padding-left: 1.6em;
+    }
+    .translation-chat {
+      margin-top: 36px;
+      padding: 17px 16px;
+      background: linear-gradient(90deg,#eaf6ff 70%,#c0eaff 100%);
+      border-radius: 15px;
+      box-shadow: 0 1px 10px rgba(44,159,255,0.09);
+      text-align: center;
+      font-size: 17px;
+      color: #1e88e5;
+      font-weight: 500;
+      letter-spacing: 2px;
+      position: relative;
+    }
+    .translation-chat:before {
+      content: "🌐";
+      font-size: 21px;
+      position: absolute;
+      left:16px;
+      top:16px;
+    }
+    .translation-chat a {
+      display:inline-block;
+      margin-top: 11px;
+      padding: 9px 30px;
+      background: linear-gradient(90deg,#31b5ff 55%,#207be0 100%);
+      color: #fff;
+      font-weight: bold;
+      border-radius: 20px;
+      text-decoration: none;
+      font-size: 16px;
+      letter-spacing: 2px;
+      transition: background 0.23s;
+    }
+    .translation-chat a:hover {
+      background: linear-gradient(90deg,#207be0 35%,#31b5ff 100%);
+    }
+  </style>
+</head>
+<body>
+  <div class="mobile-list">
+    <div class="shop-item">
+      <div class="shop-title">ソープランド ファンタジースパ FANTASY Spa泡泡浴</div>
+      <ul class="fees-list">
+        <li>70分鐘：44,000日圓</li>
+        <li>90分鐘：55,000日圓</li>
+        <li>110分鐘：68,000日圓</li>
+        <li>延長20分鐘：12,000日圓</li>
+        <li>指名費用：2,000日圓</li>
+      </ul>
+      <div class="shop-links">
+        <a href="https://www.cityheaven.net/hokkaido/A0101/A010103/fantasispa/attend/" target="_blank">出勤查詢</a>
+        <a href="https://line.me/ti/p/GpYCQJr92B" target="_blank">LINE聯絡</a>
+      </div>
+    </div>
+    <div class="shop-item">
+      <div class="shop-title">ハピネス札幌 Happiness Sapporo</div>
+      <ul class="fees-list">
+        <li>60分鐘：30,000日圓</li>
+        <li>75分鐘：38,000日圓</li>
+        <li>90分鐘：46,000日圓</li>
+        <li>指定費用：3,000日圓</li>
+      </ul>
+      <div class="shop-links">
+        <a href="https://fujoho.jp/index.php?p=shop_info&id=59887" target="_blank">出勤查詢</a>
+        <a href="https://lin.ee/qMmPn8x" target="_blank">LINE聯絡</a>
+      </div>
+    </div>
+    <div class="shop-item">
+      <div class="shop-title">サロンドエム salon de M</div>
+      <ul class="fees-list">
+        <li>70分鐘：43,000日元</li>
+        <li>90分鐘：55,000日元</li>
+        <li>110分鐘：68,000日元</li>
+      </ul>
+      <div class="note">*不能現場指定小姐，提前預約可能可指定</div>
+      <div class="shop-links">
+        <a href="https://www.cityheaven.net/hokkaido/A0101/A010103/soap_q/attend/" target="_blank">出勤查詢</a>
+        <a href="https://line.me/ti/p/iSXPYiUL5j" target="_blank">LINE聯絡</a>
+      </div>
+    </div>
+    <div class="translation-chat">
+      若需日文即時翻譯聊天，可點擊下方連結<br>
+      <a href="https://yoasobi-heaven.com/heaven-chat/home" target="_blank">線上翻譯聊天點此</a>
     </div>
   </div>
-  <div class="shop-item">
-    <div class="shop-title">ハピネス札幌 Happiness Sapporo</div>
-    <ul class="fees-list">
-      <li>60分鐘：30,000日圓</li>
-      <li>75分鐘：38,000日圓</li>
-      <li>90分鐘：46,000日圓</li>
-      <li>指定費用：3,000日圓</li>
-    </ul>
-    <div class="shop-links">
-      <a href="https://fujoho.jp/index.php?p=shop_info&id=59887" target="_blank">出勤查詢</a>
-      <a href="https://lin.ee/qMmPn8x" target="_blank">LINE聯絡</a>
-    </div>
-  </div>
-  <div class="shop-item">
-    <div class="shop-title">サロンドエム salon de M</div>
-    <ul class="fees-list">
-      <li>70分鐘：43,000日元</li>
-      <li>90分鐘：55,000日元</li>
-      <li>110分鐘：68,000日元</li>
-    </ul>
-    <div class="note">*不能現場指定小姐，提前預約可能可指定</div>
-    <div class="shop-links">
-      <a href="https://www.cityheaven.net/hokkaido/A0101/A010103/soap_q/attend/" target="_blank">出勤查詢</a>
-      <a href="https://line.me/ti/p/iSXPYiUL5j" target="_blank">LINE聯絡</a>
-    </div>
-  </div>
-  <div class="translation-chat">
-    若需日文即時翻譯聊天，可點擊下方連結<br>
-    <a href="https://yoasobi-heaven.com/heaven-chat/home" target="_blank">線上翻譯聊天點此</a>
-  </div>
-</div>
+</body>
+</html>
