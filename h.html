@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>札幌泡泡浴精選</title>
+  <title>札精選</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -30,7 +30,7 @@
       margin: 0 auto;
     }
 
-    /* 卡片設計 - 極簡乾淨 (無多餘陰影特效) */
+    /* 卡片設計 - 極簡乾淨 */
     .shop-card {
       background: var(--card-bg);
       border-radius: 14px;
@@ -77,7 +77,7 @@
       margin-top: 3px;
     }
 
-    /* 控制區 (指名費標籤/選單) */
+    /* 控制區 */
     .control-bar {
       display: flex;
       justify-content: flex-end;
@@ -153,7 +153,6 @@
       margin-top: 3px;
     }
     
-    /* 數值顏色 */
     .sub-cp span {
       color: #ff9500; 
       font-weight: 500;
@@ -262,8 +261,8 @@
   <div class="shop-card">
     <div class="shop-header">
       <div class="shop-icon">🏰</div>
-      <!-- 使用 maps.google.com/?q= 格式，這在 iOS 上比較容易喚醒 App -->
-      <a href="https://maps.google.com/?q=FANTASY+Spa+Sapporo+Susukino" target="_blank" class="shop-name">
+      <!-- 修正連結：使用 Google Maps Web API 並加入日文搜尋字串，避免 Apple Maps 找不到 -->
+      <a href="https://www.google.com/maps/search/?api=1&query=FANTASY+Spa+札幌+ファンタジースパ" target="_blank" class="shop-name">
         FANTASY Spa<span class="shop-sub-name">ファンタジースパ</span>
       </a>
     </div>
@@ -311,7 +310,8 @@
   <div class="shop-card">
     <div class="shop-header">
       <div class="shop-icon">🍀</div>
-      <a href="https://maps.google.com/?q=Happiness+Sapporo+Soapland" target="_blank" class="shop-name">
+      <!-- 修正連結：加入日文 ハピネス札幌 確保 Apple Maps 也能找到 -->
+      <a href="https://www.google.com/maps/search/?api=1&query=ハピネス札幌+Happiness+Sapporo" target="_blank" class="shop-name">
         Happiness Sapporo<span class="shop-sub-name">ハピネス札幌</span>
       </a>
     </div>
@@ -359,7 +359,8 @@
   <div class="shop-card">
     <div class="shop-header">
       <div class="shop-icon">🎩</div>
-      <a href="https://maps.google.com/?q=Salon+de+M+Sapporo+Susukino" target="_blank" class="shop-name">
+      <!-- 修正連結：加入日文 サロンドエム 確保準確度 -->
+      <a href="https://www.google.com/maps/search/?api=1&query=サロンドエム+札幌+Salon+de+M" target="_blank" class="shop-name">
         Salon de M<span class="shop-sub-name">サロンドエム</span>
       </a>
     </div>
@@ -441,7 +442,6 @@
     return combos.slice(0, 3);
   }
 
-  // 渲染推薦區塊
   function renderRecommend(elementId, topCombos) {
     const el = document.getElementById(elementId);
     const medals = ['1', '2', '3'];
@@ -470,7 +470,6 @@
       let finalPrice = item.price + fee;
       let cp = finalPrice / item.min;
       document.getElementById(`p_fan_${item.min}`).textContent = `¥${fmt(finalPrice)}`;
-      // 這裡拿掉了 CP 字樣，只保留數值
       document.getElementById(`cp_fan_${item.min}`).textContent = cp.toFixed(1) + " /分";
     });
     const topCombos = calculateCombinations(fantasyBasePrices, fee);
@@ -518,7 +517,6 @@
     renderRecommend('salonRecommendText', topCombos);
   }
 
-  // 初始化
   window.onload = function() {
     updateFantasyCP();
     updateHappinessCP();
