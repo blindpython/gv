@@ -161,9 +161,19 @@
       font-weight: 700;
       color: #ff6f00;
     }
+    .dynamic-cp-item .cp-time {
+      font-weight: 600;
+      color: #1e88e5;
+    }
+    .dynamic-cp-item .cp-method {
+      font-size: 11px;
+      color: #666;
+      margin-left: 4px;
+    }
     .dynamic-cp-item .cp-value {
       font-weight: 600;
       color: #f26161;
+      margin-left: 4px;
     }
     .shop-links {
       margin-top: 12px;
@@ -285,23 +295,23 @@
       </div>
 
       <div class="dynamic-cp-section show" id="dynamicCPSection">
-        <div class="dynamic-cp-label">⭐ 動態 CP 值計算 (單分鐘)</div>
+        <div class="dynamic-cp-label">⭐ 動態 CP 值排序 (前三名)</div>
         <ul class="dynamic-cp-list" id="dynamicCPList">
           <li class="dynamic-cp-item">
-            <span class="cp-rank">🥇 70分鐘</span> — <span class="cp-value">614.29/分</span>
+            <span class="cp-rank">🥇</span><span class="cp-time">90分鐘</span><span class="cp-method">(分鐘相加)</span> — <span class="cp-value">611.11</span>
           </li>
           <li class="dynamic-cp-item">
-            <span class="cp-rank">🥈 90分鐘</span> — <span class="cp-value">611.11/分</span>
+            <span class="cp-rank">🥈</span><span class="cp-time">70分鐘</span><span class="cp-method">(分鐘相加)</span> — <span class="cp-value">614.29</span>
           </li>
           <li class="dynamic-cp-item">
-            <span class="cp-rank">🥉 110分鐘</span> — <span class="cp-value">618.18/分</span>
+            <span class="cp-rank">🥉</span><span class="cp-time">110分鐘</span><span class="cp-method">(分鐘相加)</span> — <span class="cp-value">618.18</span>
           </li>
         </ul>
       </div>
 
       <div class="note">
         <div class="note-title">📋 推薦前三：</div>
-        <span id="recommendText">🥇 90分鐘 | 🥈 70分鐘 | 🥉 110分鐘</span>
+        <span id="recommendText">🥇 90分鐘(分鐘相加) | 🥈 70分鐘(分鐘相加) | 🥉 110分鐘(分鐘相加)</span>
       </div>
       <div class="shop-links">
         <a href="https://www.cityheaven.net/hokkaido/A0101/A010103/soap_q/attend/" target="_blank">出勤查詢</a>
@@ -326,8 +336,8 @@
       const nominateFee = parseInt(document.getElementById('nominateFeeSelect').value);
       const dynamicCPList = document.getElementById('dynamicCPList');
       
-      // 計算所有方案的 CP 值
-      const cpValues = [];
+      // 計算所有方案的 CP 值（單分鐘 + 分鐘相加混合）
+      const allCpValues = [];
       
       for (let minutes in prices) {
         minutes = parseInt(minutes);
@@ -335,41 +345,27 @@
         const singleMinuteCp = (nominateFee + price) / minutes;
         const doubleMinuteCp = (nominateFee + price + price) / (minutes * 2);
         
-        cpValues.push({
+        // 添加單分鐘方式
+        allCpValues.push({
           minutes: minutes,
-          singleCp: singleMinuteCp,
-          doubleCp: doubleMinuteCp,
-          minCp: Math.min(singleMinuteCp, doubleCp)
+          cp: singleMinuteCp,
+          method: '單分鐘',
+          methodEn: 'single'
+        });
+        
+        // 添加分鐘相加方式
+        allCpValues.push({
+          minutes: minutes,
+          cp: doubleMinuteCp,
+          method: '分鐘相加',
+          methodEn: 'double'
         });
       }
       
-      // 按最低 CP 值排序
-      cpValues.sort((a, b) => a.minCp - b.minCp);
+      // 按 CP 值排序（由低到高）
+      allCpValues.sort((a, b) => a.cp - b.cp);
       
-      // 更新動態 CP 值顯示
-      let html = '';
-      const ranks = ['🥇', '🥈', '🥉'];
+      // 取前三名
+      const top3 = allCpValues.slice(0, 3);
       
-      for (let i = 0; i < cpValues.length; i++) {
-        const cp = cpValues[i];
-        const singleCpText = cp.singleCp.toFixed(2);
-        const doubleCpText = cp.doubleCp.toFixed(2);
-        
-        html += `<li class="dynamic-cp-item">
-          <span class="cp-rank">${ranks[i]} ${cp.minutes}分鐘</span> — 
-          <span class="cp-value">單${singleCpText} / 相${doubleCpText}</span>
-        </li>`;
-      }
-      
-      dynamicCPList.innerHTML = html;
-      
-      // 更新推薦文字
-      const recommendText = document.getElementById('recommendText');
-      recommendText.textContent = `🥇 ${cpValues[0].minutes}分鐘 | 🥈 ${cpValues[1].minutes}分鐘 | 🥉 ${cpValues[2].minutes}分鐘`;
-    }
-
-    // 初始化
-    updateCPValues();
-  </script>
-</body>
-</html>
+      // 更新動態 CP 值
