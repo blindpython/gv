@@ -23,7 +23,7 @@
 <body class="bg-slate-50 text-slate-900 min-h-screen pb-safe">
 
     <!-- 主要內容區域 (列表) -->
-    <main id="list-view" class="max-w-5xl mx-auto p-4 md:p-6 pb-24 transition-opacity duration-300">
+    <main id="list-view" class="max-w-6xl mx-auto p-4 md:p-6 pb-24 transition-opacity duration-300">
         
         <!-- 標題區 -->
         <div class="mb-6">
@@ -32,7 +32,7 @@
         </div>
 
         <!-- 女孩列表 Grid -->
-        <div id="girls-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div id="girls-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <!-- JS 渲染內容 -->
         </div>
 
@@ -49,11 +49,11 @@
             <!-- LINE 區塊 -->
             <h3 class="flex items-center gap-2 font-bold text-slate-700 mb-4">
                 <svg class="w-5 h-5 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                店家指南 & 價格 (含指名料 ¥2,000)
+                店家指南 & 價格 (已含指名料)
             </h3>
             
-            <!-- 調整 grid-cols 以容納 4 個項目，改為 flex-col 排版以顯示價格 -->
-            <div id="line-links-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
+            <!-- 調整 grid-cols 為 3 欄，以容納 6 個項目 -->
+            <div id="line-links-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-6">
                 
                 <!-- salon de M -->
                 <a href="https://line.me/ti/p/iSXPYiUL5j" target="_blank" class="flex flex-col bg-white p-3 rounded-lg border border-slate-200 hover:border-green-400 hover:shadow-md transition-all group no-underline active:scale-95 h-full relative overflow-hidden">
@@ -65,8 +65,8 @@
                         </div>
                     </div>
                     <!-- 評語 -->
-                    <div class="mb-3 px-2 py-1.5 bg-slate-50 rounded text-[11px] text-slate-600 border border-slate-100 leading-relaxed">
-                        <span class="text-green-600 font-bold">特色：</span>品質控管穩，教育訓練紮實。服務與外貌平衡最好的安全牌，適合怕踩雷的人。
+                    <div class="mb-3 px-2 py-1.5 bg-slate-50 rounded text-[11px] text-slate-600 border border-slate-100 leading-relaxed min-h-[3rem]">
+                        <span class="text-green-600 font-bold">特色：</span>品質控管穩，教育訓練紮實。服務與外貌平衡最好的安全牌。
                     </div>
                     <div class="mt-auto pt-2 border-t border-slate-100 space-y-2">
                         <div class="flex justify-between items-center text-xs text-slate-600 px-1">
@@ -103,8 +103,8 @@
                         </div>
                     </div>
                     <!-- 評語 -->
-                    <div class="mb-3 px-2 py-1.5 bg-slate-50 rounded text-[11px] text-slate-600 border border-slate-100 leading-relaxed">
-                        <span class="text-green-600 font-bold">特色：</span>主打高級感與視覺衝擊，適合對臉蛋身材有高標準的「外貌協會」玩家。
+                    <div class="mb-3 px-2 py-1.5 bg-slate-50 rounded text-[11px] text-slate-600 border border-slate-100 leading-relaxed min-h-[3rem]">
+                        <span class="text-green-600 font-bold">特色：</span>主打高級感與視覺衝擊，適合對臉蛋身材有高標準的「外貌協會」。
                     </div>
                     <div class="mt-auto pt-2 border-t border-slate-100 space-y-2">
                         <div class="flex justify-between items-center text-xs text-slate-600 px-1">
@@ -142,8 +142,8 @@
                         </div>
                     </div>
                     <!-- 評語 -->
-                    <div class="mb-3 px-2 py-1.5 bg-slate-50 rounded text-[11px] text-slate-600 border border-slate-100 leading-relaxed">
-                        <span class="text-green-600 font-bold">特色：</span>女孩多、新人多，價格最便宜。適合第一次體驗、喜歡嘗鮮或預算考量的玩家。
+                    <div class="mb-3 px-2 py-1.5 bg-slate-50 rounded text-[11px] text-slate-600 border border-slate-100 leading-relaxed min-h-[3rem]">
+                        <span class="text-green-600 font-bold">特色：</span>女孩多、價格最便宜。適合第一次體驗、喜歡嘗鮮或預算考量。
                     </div>
                     <div class="mt-auto pt-2 border-t border-slate-100 space-y-2">
                         <div class="flex justify-between items-center text-xs text-slate-600 px-1">
@@ -162,7 +162,7 @@
                         </div>
                         <div class="flex justify-between items-center text-xs text-slate-800 bg-rose-50 border border-rose-100 rounded px-1 py-1">
                             <div class="flex flex-col leading-tight">
-                                <span class="flex items-center gap-1">60分+60分</span>
+                                <span class="flex items-center gap-1">120分 (60+60)</span>
                                 <span class="text-[9px] bg-rose-500 text-white px-1 rounded w-fit mt-0.5">神CP</span>
                             </div>
                             <div class="text-right">
@@ -183,8 +183,8 @@
                         </div>
                     </div>
                     <!-- 評語 -->
-                    <div class="mb-3 px-2 py-1.5 bg-slate-50 rounded text-[11px] text-slate-600 border border-slate-100 leading-relaxed">
-                        <span class="text-green-600 font-bold">特色：</span>主打女友感(GFE)與細膩服務。短時間偏貴，但長鐘方案划算，適合想慢熱互動的人。
+                    <div class="mb-3 px-2 py-1.5 bg-slate-50 rounded text-[11px] text-slate-600 border border-slate-100 leading-relaxed min-h-[3rem]">
+                        <span class="text-green-600 font-bold">特色：</span>主打女友感(GFE)與細膩服務。長鐘方案划算，適合想慢熱互動的人。
                     </div>
                     <div class="mt-auto pt-2 border-t border-slate-100 space-y-2">
                         <div class="flex justify-between items-center text-xs text-slate-600 px-1">
@@ -210,6 +210,84 @@
                         </div>
                     </div>
                 </a>
+
+                <!-- SOAP LOVE VEGAS (新增) -->
+                <a href="https://line.me/ti/p/SDdjMBl2Ob" target="_blank" class="flex flex-col bg-white p-3 rounded-lg border border-orange-200 hover:border-orange-400 hover:shadow-md transition-all group no-underline active:scale-95 h-full relative overflow-hidden">
+                    <div class="flex items-center gap-3 mb-2">
+                        <div class="w-8 h-8 rounded-full bg-orange-50 flex items-center justify-center text-orange-500 group-hover:bg-orange-100 transition-colors shrink-0">L</div>
+                        <div>
+                            <p class="font-bold text-slate-800 group-hover:text-orange-600 text-sm truncate">LOVE VEGAS</p>
+                            <span class="text-[10px] bg-orange-50 text-orange-600 px-1.5 py-0.5 rounded">熱情娛樂風</span>
+                        </div>
+                    </div>
+                    <!-- 評語 -->
+                    <div class="mb-3 px-2 py-1.5 bg-slate-50 rounded text-[11px] text-slate-600 border border-slate-100 leading-relaxed min-h-[3rem]">
+                        <span class="text-orange-600 font-bold">特色：</span>新加入的店家，風格活潑明亮。價格中等，提名費 ¥4,000 已包含。
+                    </div>
+                    <div class="mt-auto pt-2 border-t border-slate-100 space-y-2">
+                        <div class="flex justify-between items-center text-xs text-slate-600 px-1">
+                            <span>60分</span>
+                            <div class="text-right">
+                                <div class="font-mono font-bold">¥37,000</div>
+                                <div class="text-[9px] text-slate-400">¥616/分</div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center text-xs text-slate-800 bg-orange-50 border border-orange-100 rounded px-1 py-1">
+                            <span class="flex items-center gap-1">80分 <span class="text-[9px] bg-orange-200 text-orange-800 px-1 rounded">熱門</span></span>
+                            <div class="text-right">
+                                <div class="font-mono font-bold text-orange-600">¥49,000</div>
+                                <div class="text-[9px] text-orange-400">¥612/分</div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center text-xs text-slate-600 px-1">
+                            <span>100分</span>
+                            <div class="text-right">
+                                <div class="font-mono font-bold">¥61,000</div>
+                                <div class="text-[9px] text-slate-400">¥610/分</div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- 看護学院DX (新增) -->
+                <a href="https://line.me/ti/p/ztlvoIhwkY" target="_blank" class="flex flex-col bg-white p-3 rounded-lg border border-blue-200 hover:border-blue-400 hover:shadow-md transition-all group no-underline active:scale-95 h-full relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-blue-600 text-white text-[9px] px-2 py-0.5 rounded-bl-lg font-bold">高級店</div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-blue-500 group-hover:bg-blue-100 transition-colors shrink-0">L</div>
+                        <div>
+                            <p class="font-bold text-slate-800 group-hover:text-blue-600 text-sm truncate">看護学院DX</p>
+                            <span class="text-[10px] bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded">制服控聖地</span>
+                        </div>
+                    </div>
+                    <!-- 評語 -->
+                    <div class="mb-3 px-2 py-1.5 bg-slate-50 rounded text-[11px] text-slate-600 border border-slate-100 leading-relaxed min-h-[3rem]">
+                        <span class="text-blue-600 font-bold">特色：</span>主打護士Cosplay的高級店。顏值與服務都有高水準要求，適合預算充足的玩家。
+                    </div>
+                    <div class="mt-auto pt-2 border-t border-slate-100 space-y-2">
+                        <div class="flex justify-between items-center text-xs text-slate-600 px-1">
+                            <span>70分</span>
+                            <div class="text-right">
+                                <div class="font-mono font-bold">¥56,000</div>
+                                <div class="text-[9px] text-slate-400">¥800/分</div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center text-xs text-slate-800 bg-blue-50 border border-blue-100 rounded px-1 py-1">
+                            <span class="flex items-center gap-1">90分 <span class="text-[9px] bg-blue-200 text-blue-800 px-1 rounded">推</span></span>
+                            <div class="text-right">
+                                <div class="font-mono font-bold text-blue-600">¥72,000</div>
+                                <div class="text-[9px] text-blue-400">¥800/分</div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center text-xs text-slate-600 px-1">
+                            <span>110分</span>
+                            <div class="text-right">
+                                <div class="font-mono font-bold">¥88,000</div>
+                                <div class="text-[9px] text-slate-400">¥800/分</div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
             </div>
 
             <!-- 地圖區塊 -->
@@ -281,22 +359,29 @@
         const GIRLS_DATA = [
             { id: 1, name: "新垣いちる", shop: "Soap-Q (Hokkaido)", url: "https://soap-q.hokkaido-susukino.net/top/girls/girldetail/?girl_id=29622850", type: "soap-q" },
             { id: 2, name: "りか", shop: "Soap-Q (Hokkaido)", url: "https://soap-q.hokkaido-susukino.net/top/girls/girldetail/?girl_id=30454705", type: "soap-q" },
-            { id: 3, name: "AYAKA", shop: "Pure Lovers (Shop 14208)", url: "https://purelovers-escort.com/zh-hant/shop/14208/girl/4280092/", type: "purelovers" },
+            // ID 3 AYAKA 已刪除
             { id: 4, name: "CHIAKI", shop: "Pure Lovers (Shop 14208)", url: "https://purelovers-escort.com/zh-hant/shop/14208/girl/2889379/", type: "purelovers" },
             { id: 5, name: "Eimi", shop: "Pure Lovers (Shop 18040)", url: "https://purelovers-escort.com/zh-hant/shop/18040/girl/5026394/", type: "purelovers" },
             { id: 6, name: "kazuha", shop: "Pure Lovers (Shop 18040)", url: "https://purelovers-escort.com/zh-hant/shop/18040/girl/4133996/", type: "purelovers" },
             { id: 7, name: "Ito", shop: "Pure Lovers (Shop 18040)", url: "https://purelovers-escort.com/zh-hant/shop/18040/girl/4377006/", type: "purelovers" },
-            // 新增
             { id: 8, name: "涼音なな", shop: "夢の扉", url: "https://www.yumeno-tobira.com/profile/?gid=01017", type: "yumenotobira" },
-            { id: 9, name: "時田こよみ", shop: "夢の扉", url: "https://www.yumeno-tobira.com/profile/?gid=01003", type: "yumenotobira" }
+            { id: 9, name: "時田こよみ", shop: "夢の扉", url: "https://www.yumeno-tobira.com/profile/?gid=01003", type: "yumenotobira" },
+            // 新增: SOAP LOVE VEGAS
+            { id: 10, name: "runa", shop: "LOVE VEGAS", url: "https://purelovers-escort.com/zh-hant/shop/5056/girl/4964878/", type: "lovevegas" },
+            { id: 11, name: "えり", shop: "LOVE VEGAS", url: "https://purelovers-escort.com/zh-hant/shop/5056/girl/3735154/", type: "lovevegas" },
+            // 新增: 看護学院DX
+            { id: 12, name: "rei", shop: "看護学院DX", url: "https://purelovers-escort.com/zh-hant/shop/346/girl/5030065/", type: "kangogakuin" },
+            { id: 13, name: "さゆ", shop: "看護学院DX", url: "https://purelovers-escort.com/zh-hant/shop/346/girl/2826644/", type: "kangogakuin" }
         ];
 
         const MAP_LINKS = [
             { name: "salon de M", url: "https://maps.app.goo.gl/MYxKknLTHNFYfMJPA", address: "札幌市薄野周邊" },
             { name: "FANTASY Spa", url: "https://maps.app.goo.gl/PAppCK4vE2V1zyXG7", address: "札幌市薄野周邊" },
             { name: "Happiness", url: "https://maps.app.goo.gl/2YBzy1wGrG3Nit1G6", address: "札幌市薄野周邊" },
-            // 新增
-            { name: "夢の扉", url: "https://maps.app.goo.gl/VQUExzgqPP9qRagf7", address: "札幌市薄野周邊" }
+            { name: "夢の扉", url: "https://maps.app.goo.gl/VQUExzgqPP9qRagf7", address: "札幌市薄野周邊" },
+            // 新增地圖
+            { name: "LOVE VEGAS", url: "https://maps.app.goo.gl/Mgwpp5C8N8o8iuoC6", address: "札幌市薄野周邊" },
+            { name: "看護学院DX", url: "https://maps.app.goo.gl/J7HwMPjHuC4pPSs77", address: "札幌市薄野周邊" }
         ];
 
         // --- 程式邏輯 ---
@@ -310,8 +395,15 @@
             let html = '';
 
             GIRLS_DATA.forEach(girl => {
-                // 如果不是 soap-q，預設使用粉紅色系 (包含了 purelovers 和 yumenotobira)
-                const colorClass = girl.type === 'soap-q' ? 'bg-gradient-to-br from-purple-400 to-purple-600' : 'bg-gradient-to-br from-pink-400 to-rose-500';
+                // 設定不同店家的顏色風格
+                let colorClass = 'bg-gradient-to-br from-pink-400 to-rose-500'; // 預設
+                if (girl.type === 'soap-q') {
+                    colorClass = 'bg-gradient-to-br from-purple-400 to-purple-600';
+                } else if (girl.type === 'lovevegas') {
+                    colorClass = 'bg-gradient-to-br from-orange-400 to-yellow-500';
+                } else if (girl.type === 'kangogakuin') {
+                    colorClass = 'bg-gradient-to-br from-blue-400 to-sky-500';
+                }
                 
                 html += `
                 <div onclick="openPreview(${girl.id})" class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 hover:shadow-md hover:border-rose-300 transition-all group cursor-pointer active:scale-[0.98] touch-manipulation">
@@ -391,13 +483,19 @@
             document.getElementById('main-iframe').src = girl.url;
             document.getElementById('preview-external-link').href = girl.url;
             
-            // 狀態點顏色
+            // 狀態點顏色與標題顏色
             const dot = document.getElementById('preview-status-dot');
+            
+            // 重置顏色
+            dot.classList.remove('bg-rose-500', 'bg-purple-500', 'bg-orange-500', 'bg-blue-500');
+
             if (girl.type === 'soap-q') {
-                dot.classList.remove('bg-rose-500');
                 dot.classList.add('bg-purple-500');
+            } else if (girl.type === 'lovevegas') {
+                dot.classList.add('bg-orange-500');
+            } else if (girl.type === 'kangogakuin') {
+                dot.classList.add('bg-blue-500');
             } else {
-                dot.classList.remove('bg-purple-500');
                 dot.classList.add('bg-rose-500');
             }
         }
